@@ -44,16 +44,18 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
           return (
             <CarouselItem key={image._key} className="h-full w-full pl-0 md:pl-0 lg:pl-0">
               <Image 
-                  className="w-full aspect-[800/300]"
-                  src={urlFor(image)
-                    .width(800)
-                    .height(300)
-                    .quality(80)
-                    .auto("format")
-                    .url()}
-                  alt="Image"
-                  width="800"
-                  height="300"
+                className="w-full h-full sm:aspect-[1280/720]"
+                src={urlFor(image)
+                  .width(1280)
+                  .height(720)
+                  .quality(80)
+                  .auto("format")
+                  .url()}
+                alt={image.alt || "Image"}
+                width={1280}
+                height={720}
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 75vw, (max-width: 1024px) 50vw, 1280px"
+                loading={images[0] ? "eager" : "lazy"}
               />
             </CarouselItem>
           );
