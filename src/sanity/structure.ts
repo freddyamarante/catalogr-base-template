@@ -26,15 +26,7 @@ export const structure: StructureResolver = (S) =>
             .schemaType('header')
             .documentId('header')
         ),
-      S.listItem()
-        .title('Pagina')
-        .icon(DocumentIcon)
-        .child(
-          S.document()
-            .title('Pagina')
-            .schemaType('page')
-            .documentId('page')
-        ),
+      S.documentTypeListItem('page').icon(DocumentIcon),
       S.divider(),
       ...S.documentTypeListItems().filter(
         item => ![

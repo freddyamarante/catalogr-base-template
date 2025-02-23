@@ -4,8 +4,13 @@ export default defineType({
   name: 'page',
   title: 'Pages',
   type: 'document',
-  __experimental_formPreviewTitle: false,
   fields: [
+    defineField({
+      name: 'slug',
+      type: 'slug',
+      title: 'Slug',
+      validation: (Rule) => Rule.required(),
+    }),
     defineField({
       name: 'title',
       type: 'string',
@@ -19,12 +24,7 @@ export default defineType({
       name: 'seo',
       type: 'seo',
     }),
-    defineField({
-      name: 'slug',
-      type: 'slug',
-      title: 'Slug',
-      validation: (Rule) => Rule.required(),
-    }),
+    
   ],
   preview: {
     select: {
