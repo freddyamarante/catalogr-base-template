@@ -5,9 +5,11 @@ import settings from '../lib/singletons/settings'
 import sectionsList from '../lib/globals/sectionsList'
 import sectionSettings from '../lib/objects/sectionSettings'
 import padding from '../lib/objects/padding'
+import brandsMarquee from '../lib/sections/brandsMarquee'
 
 const sections: SchemaTypeDefinition[] = [
-  heroSection
+  heroSection,
+  brandsMarquee,
 ]
 
 const footers: SchemaTypeDefinition[] = [

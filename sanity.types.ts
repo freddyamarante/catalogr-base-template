@@ -93,6 +93,16 @@ export type Sections = Array<{
   settings?: SectionSettings;
   _type: "heroSection";
   _key: string;
+} | {
+  brands?: Array<{
+    logo?: string;
+    name?: string;
+    _type: "brand";
+    _key: string;
+  }>;
+  settings?: SectionSettings;
+  _type: "brandsMarquee";
+  _key: string;
 }>;
 
 export type Settings = {
@@ -135,6 +145,21 @@ export type Home = {
   _updatedAt: string;
   _rev: string;
   sections?: Sections;
+};
+
+export type BrandsMarquee = {
+  _id: string;
+  _type: "brandsMarquee";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  brands?: Array<{
+    logo?: string;
+    name?: string;
+    _type: "brand";
+    _key: string;
+  }>;
+  settings?: SectionSettings;
 };
 
 export type HeroSection = {
@@ -383,74 +408,22 @@ export type HslaColor = {
   a?: number;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Padding | Sections | Settings | Home | HeroSection | SectionSettings | Variant | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Product | Taxon | Taxonomy | Catalog | InlineSvg | Code | MediaTag | Slug | Color | RgbaColor | HsvaColor | HslaColor;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Padding | Sections | Settings | Home | BrandsMarquee | HeroSection | SectionSettings | Variant | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Product | Taxon | Taxonomy | Catalog | InlineSvg | Code | MediaTag | Slug | Color | RgbaColor | HsvaColor | HslaColor;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/lib/queries.ts
 // Variable: SETTINGS_QUERY
-// Query: *[_id == "settings"][0] {        _id,        _type,        storeName,        logo,        spaceBetweenSections,        colorScheme {            primary,            secondary,            error,            success,            warning,            button,            border,            cardBackground,            text,            background,            foreground        },    }
+// Query: *[_type == "settings"][0] {  _id,  _type,  storeName,  logo {    asset->{      _ref,      _type    },    hotspot,    crop  },  spaceBetweenSections,  colorScheme {    primary,    secondary,    error,    success,    warning,    button,    border,    cardBackground,    text,    background,    foreground  }}
 export type SETTINGS_QUERYResult = {
-  _id: string;
-  _type: "catalog";
-  storeName: null;
-  logo: null;
-  spaceBetweenSections: null;
-  colorScheme: null;
-} | {
-  _id: string;
-  _type: "heroSection";
-  storeName: null;
-  logo: null;
-  spaceBetweenSections: null;
-  colorScheme: null;
-} | {
-  _id: string;
-  _type: "home";
-  storeName: null;
-  logo: null;
-  spaceBetweenSections: null;
-  colorScheme: null;
-} | {
-  _id: string;
-  _type: "media.tag";
-  storeName: null;
-  logo: null;
-  spaceBetweenSections: null;
-  colorScheme: null;
-} | {
-  _id: string;
-  _type: "product";
-  storeName: null;
-  logo: null;
-  spaceBetweenSections: null;
-  colorScheme: null;
-} | {
-  _id: string;
-  _type: "sanity.fileAsset";
-  storeName: null;
-  logo: null;
-  spaceBetweenSections: null;
-  colorScheme: null;
-} | {
-  _id: string;
-  _type: "sanity.imageAsset";
-  storeName: null;
-  logo: null;
-  spaceBetweenSections: null;
-  colorScheme: null;
-} | {
   _id: string;
   _type: "settings";
   storeName: string | null;
   logo: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
+    asset: {
+      _ref: null;
+      _type: "sanity.imageAsset";
+    } | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
   } | null;
   spaceBetweenSections: number | null;
   colorScheme: {
@@ -466,35 +439,12 @@ export type SETTINGS_QUERYResult = {
     background: Color | null;
     foreground: Color | null;
   } | null;
-} | {
-  _id: string;
-  _type: "taxon";
-  storeName: null;
-  logo: null;
-  spaceBetweenSections: null;
-  colorScheme: null;
-} | {
-  _id: string;
-  _type: "taxonomy";
-  storeName: null;
-  logo: null;
-  spaceBetweenSections: null;
-  colorScheme: null;
-} | {
-  _id: string;
-  _type: "variant";
-  storeName: null;
-  logo: null;
-  spaceBetweenSections: null;
-  colorScheme: null;
 } | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_id == \"settings\"][0] {\n        _id,\n        _type,\n        storeName,\n        logo,\n        spaceBetweenSections,\n        colorScheme {\n            primary,\n            secondary,\n            error,\n            success,\n            warning,\n            button,\n            border,\n            cardBackground,\n            text,\n            background,\n            foreground\n        },\n    }": SETTINGS_QUERYResult;
+    "*[_type == \"settings\"][0] {\n  _id,\n  _type,\n  storeName,\n  logo {\n    asset->{\n      _ref,\n      _type\n    },\n    hotspot,\n    crop\n  },\n  spaceBetweenSections,\n  colorScheme {\n    primary,\n    secondary,\n    error,\n    success,\n    warning,\n    button,\n    border,\n    cardBackground,\n    text,\n    background,\n    foreground\n  }\n}": SETTINGS_QUERYResult;
   }
 }
-
-export type Section = HeroSection 

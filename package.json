@@ -28,6 +28,7 @@
     "next-sanity": "^9.8.59",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-fast-marquee": "^1.6.5",
     "sanity": "^3.76.1",
     "sanity-image": "^1.0.0",
     "sanity-plugin-media": "^2.3.2",
