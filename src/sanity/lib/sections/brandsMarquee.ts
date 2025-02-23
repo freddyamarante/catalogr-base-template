@@ -35,5 +35,8 @@ export default defineField({
       title: 'Settings',
       type: 'sectionSettings'
     })
-  ]
+  ],
+  preview: {
+    prepare: () => ({title: 'Brands Marquee'}),
+  },
 });

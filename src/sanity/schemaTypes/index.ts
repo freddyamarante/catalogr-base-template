@@ -6,28 +6,34 @@ import sectionsList from '../lib/globals/sectionsList'
 import sectionSettings from '../lib/objects/sectionSettings'
 import padding from '../lib/objects/padding'
 import brandsMarquee from '../lib/sections/brandsMarquee'
+import header from '../lib/singletons/header'
+import seo from '../lib/globals/seo'
+import page from '../lib/singletons/page'
 
-const sections: SchemaTypeDefinition[] = [
+export const sections: SchemaTypeDefinition[] = [
   heroSection,
   brandsMarquee,
 ]
 
-const footers: SchemaTypeDefinition[] = [
+export const footers: SchemaTypeDefinition[] = [
 
 ]
 
-const singletons: SchemaTypeDefinition[] = [
+export const singletons: SchemaTypeDefinition[] = [
   home,
   settings,
+  header,
+  page,
 ]
 
-const objects: SchemaTypeDefinition[] = [
+export const objects: SchemaTypeDefinition[] = [
   sectionsList,
   sectionSettings,
   padding,
+  seo,
 ]
 
-const documents: SchemaTypeDefinition[] = [
+export const documents: SchemaTypeDefinition[] = [
   
 ]
 
