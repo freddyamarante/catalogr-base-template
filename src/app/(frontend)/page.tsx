@@ -2,22 +2,14 @@
 import CmsSection from "@/components/CmsSection";
 import { client } from "@/sanity/lib/client";
 import { Sections } from "../../../sanity.types";
+import { HOME_QUERY } from "@/lib/queries";
 
 type Section = Sections[number];
 
-async function getHomeData() {
-    const query = `*[_type == "home"][0] {
-        _id,
-        _type,
-        sections[] {
-            ...
-        }
-    }`;
-    return client.fetch(query);
-}
+const options = { next: { revalidate: 60 } };
 
 export default async function Home() {
-    const home = await getHomeData();
+    const home = await client.fetch(HOME_QUERY, {}, options);
 
     return (
     <>
