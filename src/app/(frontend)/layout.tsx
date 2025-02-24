@@ -43,7 +43,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider settings={validatedSettings}>
-          <main className="flex flex-col grow gap-y-[calc(var(--space-between-sections)*.75)] sm:gap-y-[--space-between-sections] mx-6 sm:px-24">
+          <main className="flex flex-col gap-y-[calc(var(--space-between-sections)*.75)] sm:gap-y-[--space-between-sections] mx-6 px-3 sm:px-24">
             {children}
           </main>
         </ThemeProvider>

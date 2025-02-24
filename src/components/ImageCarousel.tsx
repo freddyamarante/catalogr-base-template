@@ -43,20 +43,22 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
         {images && images.map((image) => {
           return (
             <CarouselItem key={image._key} className="h-full w-full pl-0 md:pl-0 lg:pl-0">
-              <Image 
-                className="w-full h-full sm:aspect-[1280/720]"
-                src={urlFor(image)
-                  .width(1280)
-                  .height(720)
-                  .quality(80)
-                  .auto("format")
-                  .url()}
-                alt={image.alt || "Image"}
-                width={1280}
-                height={720}
-                sizes="(max-width: 640px) 100vw, (max-width: 768px) 75vw, (max-width: 1024px) 50vw, 1280px"
-                loading={images[0] ? "eager" : "lazy"}
-              />
+              <div className='w-full h-full relative aspect-video'>
+                <Image 
+                  className="w-full h-full object-cover"
+                  src={urlFor(image)
+                    .width(1280)
+                    .height(720)
+                    .quality(80)
+                    .auto("format")
+                    .url()}
+                  alt={image.alt || "Image"}
+                  width={1280}
+                  height={720}
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 75vw, (max-width: 1024px) 50vw, 1280px"
+                  loading={images[0] ? "eager" : "lazy"}
+                />
+              </div>
             </CarouselItem>
           );
         })}
