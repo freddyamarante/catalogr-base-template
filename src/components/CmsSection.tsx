@@ -1,13 +1,15 @@
 import React from "react";
 import { sections } from "@/sanity/lib/globals/sectionResolver";
-import { Section } from "../../sanity.types";
+import { Sections } from "../../sanity.types";
+
+type Section = Sections[number]
 
 interface CmsSectionProps {
   data: Section;
 }
 
 const CmsSection: React.FC<CmsSectionProps> = ({ data }) => {
-  const SectionComponent = sections[data._type];
+  const SectionComponent = sections[data._type as keyof typeof sections] as unknown as React.FC<Section>;
 
   const uniqueId = React.useMemo(() => `section-${Math.random().toString(36).substr(2, 9)}`, []);
 

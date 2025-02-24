@@ -8,6 +8,8 @@ import { client } from "@/sanity/lib/client";
 import { SETTINGS_QUERY } from "@/lib/queries";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
+import { validateSettings } from "@/lib/utils";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -34,14 +36,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = await client.fetch(SETTINGS_QUERY, {}, options)
+  const settingsData = await client.fetch(SETTINGS_QUERY, {}, options);
+  const validatedSettings = validateSettings(settingsData);
 
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider settings={settings}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ThemeProvider settings={validatedSettings}>
           <main className="flex flex-col grow gap-y-[calc(var(--space-between-sections)*.75)] sm:gap-y-[--space-between-sections] mx-6 sm:px-24">
             {children}
           </main>

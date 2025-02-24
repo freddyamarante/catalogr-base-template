@@ -1,7 +1,9 @@
 // src/app/page.tsx
 import CmsSection from "@/components/CmsSection";
 import { client } from "@/sanity/lib/client";
-import { Section } from "../../../sanity.types";
+import { Sections } from "../../../sanity.types";
+
+type Section = Sections[number];
 
 async function getHomeData() {
     const query = `*[_type == "home"][0] {
