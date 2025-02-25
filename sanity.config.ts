@@ -19,37 +19,30 @@ import {structure} from './src/sanity/structure'
 import { inlineSvgInput } from '@focus-reactive/sanity-plugin-inline-svg-input'
 
 const sanityCommerceConfig: SanityCommercePluginConfig = {
-  productLabel: 'Coffee',
-  variantLabel: 'Coffee Variant',
-  taxonomyLabel: 'Category System',
-  taxonLabel: 'Category',
-  productAttributes: [{ name: 'origin', title: 'Origin', type: 'string' }],
+  productLabel: 'Producto',
+  variantLabel: 'Variante',
+  taxonomyLabel: 'Sistema de Categoría',
+  taxonLabel: 'Categoría',
+  productAttributes: [
+    { name: 'brand', title: 'Marca', type: 'string' },
+    { name: 'material', title: 'Material', type: 'string' },
+    { name: 'careInstructions', title: 'Instrucciones de Cuidado', type: 'text' },
+  ],
   variantAttributes: [
-    {
-      name: 'roastLevel',
-      title: 'Roast Level',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Light', value: 'light' },
-          { title: 'Medium', value: 'medium' },
-          { title: 'Dark', value: 'dark' },
-        ],
-      },
-    },
+    { name: 'size', title: 'Talla', type: 'string' },
+    { name: 'color', title: 'Color', type: 'string' },
+    { name: 'sku', title: 'SKU', type: 'string' },
   ],
 };
+
 
 export default defineConfig({
   basePath: '/studio',
   projectId,
   dataset,
-  // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
   plugins: [
     structureTool({structure}),
-    // Vision is for querying with GROQ from inside the Studio
-    // https://www.sanity.io/docs/the-vision-plugin
     visionTool({defaultApiVersion: apiVersion}),
     colorInput(),
     media(),

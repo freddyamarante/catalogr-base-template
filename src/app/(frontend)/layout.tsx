@@ -6,9 +6,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { client } from "@/sanity/lib/client";
 import { SETTINGS_QUERY } from "@/lib/queries";
-import { ThemeProvider } from "@/components/ThemeProvider";
+
+import { ThemeProvider } from "@/components/context/ThemeProvider";
+import { SettingsProvider } from "@/components/context/SettingsContext";
 
 import { validateSettings } from "@/lib/utils";
+import Header from "@/components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,11 +45,14 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider settings={validatedSettings}>
-          <main className="flex flex-col gap-y-[calc(var(--space-between-sections)*.75)] sm:gap-y-[--space-between-sections] mx-6 px-3 sm:px-24">
-            {children}
-          </main>
-        </ThemeProvider>
+        <SettingsProvider settings={settingsData}>
+          <ThemeProvider settings={validatedSettings}>
+            <Header />
+            <main className="flex flex-col gap-y-[calc(var(--space-between-sections)*.75)] sm:gap-y-[--space-between-sections] px-3 sm:px-24 overflow-hidden">
+              {children}
+            </main>
+          </ThemeProvider>
+        </SettingsProvider>
       </body>
     </html>
   );

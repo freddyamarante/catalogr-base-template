@@ -2,8 +2,8 @@ import { twMerge } from "tailwind-merge"
 import { dataset, projectId } from "@/sanity/env"
 import createImageUrlBuilder from "@sanity/image-url"
 import { SETTINGS_QUERYResult } from "../../sanity.types";
-import { ValidSettings } from "@/components/ThemeProvider";
-import { SanityColor } from "@/components/ThemeProvider";
+import { ValidSettings } from "@/components/context/ThemeProvider";
+import { SanityColor } from "@/components/context/ThemeProvider";
 
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { clsx, type ClassValue } from "clsx"
@@ -38,7 +38,7 @@ export const validateSettings = (data: SETTINGS_QUERYResult): ValidSettings => {
 
   return {
     storeName: settings?.storeName || 'Default Store',
-    logo: settings?.logo?.asset?._ref || '',
+    logo: settings?.logo || '',
     spaceBetweenSections: settings?.spaceBetweenSections || 24,
     colorScheme: {
       primary: settings?.colorScheme?.primary || defaultColor,

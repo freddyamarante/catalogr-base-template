@@ -32,7 +32,7 @@ export default defineType({
     },
     prepare({title}) {
       return {
-        title: title?.[0]?.value || 'No title',
+        title: title || 'No title',
       };
     },
   },

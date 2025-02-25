@@ -14,8 +14,12 @@ export default defineType({
     defineField({
       name: 'logo',
       title: 'Logo',
-      type: 'image',
-      options: { hotspot: true }
+      type: 'inlineSvg'
+    }),
+    defineField({
+      name: 'favicon',
+      title: 'Favicon',
+      type: 'image'
     }),
     defineField({
       name: 'spaceBetweenSections',

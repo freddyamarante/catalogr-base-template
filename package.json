@@ -12,6 +12,7 @@
   "dependencies": {
     "@commercelayer/sanity-plugin-commerce": "^1.0.0",
     "@focus-reactive/sanity-plugin-inline-svg-input": "^1.1.0",
+    "@radix-ui/react-navigation-menu": "^1.2.5",
     "@radix-ui/react-slot": "^1.1.2",
     "@sanity/client": "^6.28.0",
     "@sanity/code-input": "^5.1.2",

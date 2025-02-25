@@ -105,6 +105,91 @@ export type Sections = Array<{
   _key: string;
 }>;
 
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: Slug;
+  title?: string;
+  sections?: Sections;
+  seo?: Seo;
+};
+
+export type Seo = {
+  _type: "seo";
+  title?: string;
+  description?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
+export type Header = {
+  _id: string;
+  _type: "header";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  logoSize?: "sm" | "md" | "auto" | "lg" | "xl" | "2xl";
+  navigation?: Array<{
+    name?: string;
+    link?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "home";
+    };
+    anchor?: string;
+    _type: "internalLink";
+    _key: string;
+  } | {
+    name?: string;
+    link?: string;
+    openInNewTab?: boolean;
+    _type: "externalLink";
+    _key: string;
+  } | {
+    name?: string;
+    link?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "home";
+    };
+    childLinks?: Array<{
+      name?: string;
+      link?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "home";
+      };
+      anchor?: string;
+      _type: "internalLink";
+      _key: string;
+    } | {
+      name?: string;
+      link?: string;
+      openInNewTab?: boolean;
+      _type: "externalLink";
+      _key: string;
+    }>;
+    _type: "nestedNavigation";
+    _key: string;
+  }>;
+};
+
 export type Settings = {
   _id: string;
   _type: "settings";
@@ -112,7 +197,8 @@ export type Settings = {
   _updatedAt: string;
   _rev: string;
   storeName?: string;
-  logo?: {
+  logo?: string;
+  favicon?: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -408,22 +494,27 @@ export type HslaColor = {
   a?: number;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Padding | Sections | Settings | Home | BrandsMarquee | HeroSection | SectionSettings | Variant | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Product | Taxon | Taxonomy | Catalog | InlineSvg | Code | MediaTag | Slug | Color | RgbaColor | HsvaColor | HslaColor;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Padding | Sections | Page | Seo | Header | Settings | Home | BrandsMarquee | HeroSection | SectionSettings | Variant | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Product | Taxon | Taxonomy | Catalog | InlineSvg | Code | MediaTag | Slug | Color | RgbaColor | HsvaColor | HslaColor;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/lib/queries.ts
 // Variable: SETTINGS_QUERY
-// Query: *[_type == "settings"][0] {  _id,  _type,  storeName,  logo {    asset->{      _ref,      _type    },    hotspot,    crop  },  spaceBetweenSections,  colorScheme {    primary,    secondary,    error,    success,    warning,    button,    border,    cardBackground,    text,    background,    foreground  }}
+// Query: *[_type == "settings"][0] {  _id,  _type,  storeName,  logo,  logoSize,  favicon,  spaceBetweenSections,  colorScheme {    primary,    secondary,    error,    success,    warning,    button,    border,    cardBackground,    text,    background,    foreground  }}
 export type SETTINGS_QUERYResult = {
   _id: string;
   _type: "settings";
   storeName: string | null;
-  logo: {
-    asset: {
-      _ref: null;
-      _type: "sanity.imageAsset";
-    } | null;
-    hotspot: SanityImageHotspot | null;
-    crop: SanityImageCrop | null;
+  logo: string | null;
+  logoSize: null;
+  favicon: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
   } | null;
   spaceBetweenSections: number | null;
   colorScheme: {
@@ -440,11 +531,166 @@ export type SETTINGS_QUERYResult = {
     foreground: Color | null;
   } | null;
 } | null;
+// Variable: HOME_QUERY
+// Query: *[_type == "home"][0] {  _id,  _type,  sections[] {    _type,    ...,    settings {      _type,      padding {        top,        bottom      },      customCss    }  }}
+export type HOME_QUERYResult = {
+  _id: string;
+  _type: "home";
+  sections: Array<{
+    _type: "brandsMarquee";
+    brands?: Array<{
+      logo?: string;
+      name?: string;
+      _type: "brand";
+      _key: string;
+    }>;
+    settings: {
+      _type: "sectionSettings";
+      padding: {
+        top: number | null;
+        bottom: number | null;
+      } | null;
+      customCss: Code | null;
+    } | null;
+    _key: string;
+  } | {
+    _type: "heroSection";
+    title?: string;
+    description?: string;
+    carouselImages?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }>;
+    callToActionLabel?: string;
+    settings: {
+      _type: "sectionSettings";
+      padding: {
+        top: number | null;
+        bottom: number | null;
+      } | null;
+      customCss: Code | null;
+    } | null;
+    _key: string;
+  }> | null;
+} | null;
+// Variable: PAGE_QUERY
+// Query: *[_type == "page"][0] {  _id,  _type,  sections[] {    _type,    ...,    settings {      _type,      padding {        top,        bottom      },      customCss    }  }}
+export type PAGE_QUERYResult = {
+  _id: string;
+  _type: "page";
+  sections: Array<{
+    _type: "brandsMarquee";
+    brands?: Array<{
+      logo?: string;
+      name?: string;
+      _type: "brand";
+      _key: string;
+    }>;
+    settings: {
+      _type: "sectionSettings";
+      padding: {
+        top: number | null;
+        bottom: number | null;
+      } | null;
+      customCss: Code | null;
+    } | null;
+    _key: string;
+  } | {
+    _type: "heroSection";
+    title?: string;
+    description?: string;
+    carouselImages?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }>;
+    callToActionLabel?: string;
+    settings: {
+      _type: "sectionSettings";
+      padding: {
+        top: number | null;
+        bottom: number | null;
+      } | null;
+      customCss: Code | null;
+    } | null;
+    _key: string;
+  }> | null;
+} | null;
+// Variable: HEADER_QUERY
+// Query: *[_type == "header"][0] {  _type,  _id,  name,  logoSize,  navigation[] {    name,    _type,    _key,    ...,    link-> {      _type,      "slug": select(        // For pages        _type == "page" => slug.current,        // For home page        _type == "home" => "/",        null      )    },    openInNewTab,  }}
+export type HEADER_QUERYResult = {
+  _type: "header";
+  _id: string;
+  name: string | null;
+  logoSize: "2xl" | "auto" | "lg" | "md" | "sm" | "xl" | null;
+  navigation: Array<{
+    name?: string;
+    _type: "externalLink";
+    _key: string;
+    link: null;
+    openInNewTab: boolean | null;
+  } | {
+    name?: string;
+    _type: "internalLink";
+    _key: string;
+    link: {
+      _type: "home";
+      slug: "/";
+    } | null;
+    anchor?: string;
+    openInNewTab: null;
+  } | {
+    name?: string;
+    _type: "nestedNavigation";
+    _key: string;
+    link: {
+      _type: "home";
+      slug: "/";
+    } | null;
+    childLinks?: Array<{
+      name?: string;
+      link?: string;
+      openInNewTab?: boolean;
+      _type: "externalLink";
+      _key: string;
+    } | {
+      name?: string;
+      link?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "home";
+      };
+      anchor?: string;
+      _type: "internalLink";
+      _key: string;
+    }>;
+    openInNewTab: null;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"settings\"][0] {\n  _id,\n  _type,\n  storeName,\n  logo {\n    asset->{\n      _ref,\n      _type\n    },\n    hotspot,\n    crop\n  },\n  spaceBetweenSections,\n  colorScheme {\n    primary,\n    secondary,\n    error,\n    success,\n    warning,\n    button,\n    border,\n    cardBackground,\n    text,\n    background,\n    foreground\n  }\n}": SETTINGS_QUERYResult;
+    "*[_type == \"settings\"][0] {\n  _id,\n  _type,\n  storeName,\n  logo,\n  logoSize,\n  favicon,\n  spaceBetweenSections,\n  colorScheme {\n    primary,\n    secondary,\n    error,\n    success,\n    warning,\n    button,\n    border,\n    cardBackground,\n    text,\n    background,\n    foreground\n  }\n}": SETTINGS_QUERYResult;
+    "*[_type == \"home\"][0] {\n  _id,\n  _type,\n  sections[] {\n    _type,\n    ...,\n    settings {\n      _type,\n      padding {\n        top,\n        bottom\n      },\n      customCss\n    }\n  }\n}": HOME_QUERYResult;
+    "*[_type == \"page\"][0] {\n  _id,\n  _type,\n  sections[] {\n    _type,\n    ...,\n    settings {\n      _type,\n      padding {\n        top,\n        bottom\n      },\n      customCss\n    }\n  }\n}": PAGE_QUERYResult;
+    "*[_type == \"header\"][0] {\n  _type,\n  _id,\n  name,\n  logoSize,\n  navigation[] {\n    name,\n    _type,\n    _key,\n    ...,\n    link-> {\n      _type,\n      \"slug\": select(\n        // For pages\n        _type == \"page\" => slug.current,\n        // For home page\n        _type == \"home\" => \"/\",\n        null\n      )\n    },\n    openInNewTab,\n  }\n}": HEADER_QUERYResult;
   }
 }

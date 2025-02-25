@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SETTINGS_QUERYResult } from "../../sanity.types";
+import { SETTINGS_QUERYResult } from "../../../sanity.types";
 
 // Extract the settings type from the union
 type SanitySettings = Extract<SETTINGS_QUERYResult, { _type: 'settings' }>;
@@ -14,7 +14,7 @@ export type SanityColor = NonNullable<
 
 export interface ValidSettings {
   storeName: string;
-  logo: string;
+  logo?: string;
   spaceBetweenSections: number;
   colorScheme: {
     primary: SanityColor;
