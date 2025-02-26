@@ -680,25 +680,41 @@ export type HEADER_QUERYResult = {
     openInNewTab: null;
   }> | null;
 } | null;
-// Variable: PRODUCTS_QUERY
-// Query: *[_type == "product"] {  ...}
-export type PRODUCTS_QUERYResult = Array<{
-  _id: string;
-  _type: "product";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-  description?: string;
-  variants?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "variant";
+// Variable: CATALOG_QUERY
+// Query: {  "taxonomies": *[_type == "taxonomy"] {    _id,    name,    "taxons": taxons[]-> {      _id,      name,      description,      "products": products[]-> {        _id,        name,        description,        material,        careInstructions,        "variants": variants[]->{          _id,          size,          color,          sku,          "images": images[] {              _type,              _key,              asset-> {                  _type,                  url,                  "dimensions": dimensions              }          }        },      },    },  },}
+export type CATALOG_QUERYResult = {
+  taxonomies: Array<{
+    _id: string;
+    name: string | null;
+    taxons: Array<{
+      _id: string;
+      name: string | null;
+      description: string | null;
+      products: Array<{
+        _id: string;
+        name: string | null;
+        description: string | null;
+        material: null;
+        careInstructions: null;
+        variants: Array<{
+          _id: string;
+          size: null;
+          color: null;
+          sku: string | null;
+          images: Array<{
+            _type: "image";
+            _key: string;
+            asset: {
+              _type: "sanity.imageAsset";
+              url: string | null;
+              dimensions: null;
+            } | null;
+          }> | null;
+        }> | null;
+      }> | null;
+    }> | null;
   }>;
-  origin?: string;
-}>;
+};
 
 // Query TypeMap
 import "@sanity/client";
@@ -708,6 +724,6 @@ declare module "@sanity/client" {
     "*[_type == \"home\"][0] {\n  _id,\n  _type,\n  sections[] {\n    _type,\n    ...,\n    settings {\n      _type,\n      padding {\n        top,\n        bottom\n      },\n      customCss\n    }\n  }\n}": HOME_QUERYResult;
     "*[_type == \"page\"][0] {\n  _id,\n  _type,\n  sections[] {\n    _type,\n    ...,\n    settings {\n      _type,\n      padding {\n        top,\n        bottom\n      },\n      customCss\n    }\n  }\n}": PAGE_QUERYResult;
     "*[_type == \"header\"][0] {\n  _type,\n  _id,\n  name,\n  logoSize,\n  navigation[] {\n    name,\n    _type,\n    _key,\n    ...,\n    link-> {\n      _type,\n      \"slug\": select(\n        // For pages\n        _type == \"page\" => slug.current,\n        // For home page\n        _type == \"home\" => \"/\",\n        null\n      )\n    },\n    openInNewTab,\n    \"link\": select(\n      _type == \"internalLink\" => link-> {\n        _type,\n        \"slug\": select(\n          // For pages\n          _type == \"page\" => slug.current,\n          // For home page\n          _type == \"home\" => \"/\",\n          null\n        )\n      },\n      _type == \"externalLink\" => link,\n      null\n    )\n  }\n}": HEADER_QUERYResult;
-    "*[_type == \"product\"] {\n  ...\n}": PRODUCTS_QUERYResult;
+    "{\n  \"taxonomies\": *[_type == \"taxonomy\"] {\n    _id,\n    name,\n    \"taxons\": taxons[]-> {\n      _id,\n      name,\n      description,\n      \"products\": products[]-> {\n        _id,\n        name,\n        description,\n        material,\n        careInstructions,\n        \"variants\": variants[]->{\n          _id,\n          size,\n          color,\n          sku,\n          \"images\": images[] {\n              _type,\n              _key,\n              asset-> {\n                  _type,\n                  url,\n                  \"dimensions\": dimensions\n              }\n          }\n        },\n      },\n    },\n  },\n}": CATALOG_QUERYResult;
   }
 }

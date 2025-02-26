@@ -9,6 +9,7 @@ import brandsMarquee from '../lib/sections/brandsMarquee'
 import header from '../lib/singletons/header'
 import seo from '../lib/globals/seo'
 import page from '../lib/singletons/page'
+import catalogPage from '../lib/singletons/catalog'
 
 export const sections: SchemaTypeDefinition[] = [
   heroSection,
@@ -24,6 +25,7 @@ export const singletons: SchemaTypeDefinition[] = [
   settings,
   header,
   page,
+  catalogPage,
 ]
 
 export const objects: SchemaTypeDefinition[] = [

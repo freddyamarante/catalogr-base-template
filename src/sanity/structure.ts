@@ -1,5 +1,5 @@
 import { type StructureResolver } from 'sanity/structure';
-import { CogIcon, HomeIcon, MenuIcon, DocumentIcon } from '@sanity/icons';
+import { CogIcon, HomeIcon, MenuIcon, DocumentIcon, MasterDetailIcon } from '@sanity/icons';
 import { globalSections } from './lib/globals/globalSections';
 
 import { singletons } from './schemaTypes';
@@ -16,6 +16,15 @@ export const structure: StructureResolver = (S) =>
             .title('Principal')
             .schemaType('home')
             .documentId('home')
+        ),
+      S.listItem()
+        .title('Catalogo')
+        .icon(MasterDetailIcon)
+        .child(
+          S.document()
+            .title('Catalogo')
+            .schemaType('catalogPage')
+            .documentId('catalogPage')
         ),
       S.listItem()
         .title('Cabecera')

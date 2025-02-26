@@ -1,49 +1,53 @@
-// components/NestedNavigation.tsx
 'use client';
 
-import InternalLink, {type InternalLinkProps } from "./InternalLink";
-import ExternalLink, {type ExternalLinkProps} from "./ExternalLink";
-
+import * as React from "react";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuTrigger,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import InternalLink, { InternalLinkProps } from "./InternalLink";
+import ExternalLink, { ExternalLinkProps } from "./ExternalLink";
 
 interface NestedNavigationProps {
-  data: InternalLinkProps | ExternalLinkProps;
+  data: {
+    name: string;
+    childLinks?: Array<InternalLinkProps["data"] | ExternalLinkProps["data"]>;
+  };
 }
 
 const NestedNavigation: React.FC<NestedNavigationProps> = ({ data }) => {
   return (
-    <div className="relative group">
-      <InternalLink
-        data={data}
-        className="text-sm hover:text-primary"
-      />
-      {data.childLinks && (
-        <div className="absolute hidden group-hover:block bg-background p-4 rounded-lg shadow-lg">
-          {data.childLinks.map((child: any) => {
-            switch(child._type) {
-              case 'internalLink':
-                return (
-                  <InternalLink
-                    key={child._key}
-                    data={child}
-                    className="block py-2 text-sm hover:text-primary"
-                  />
-                )
-              case 'externalLink':
-                return (
-                  <ExternalLink
-                    key={child._key}
-                    data={child}
-                    className="block py-2 text-sm hover:text-primary"
-                  />
-                )
-              default:
-                return null
-            }
-          })}
-        </div>
-      )}
-    </div>
-  )
-}
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>{data.name}</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+              {data.childLinks?.map((child) => {
+                if (child?._type === 'internalLink') {
+                  return (
+                    <li key={child._key}>
+                      <InternalLink data={child} />
+                    </li>
+                  );
+                } else if (child?._type === 'externalLink') {
+                  return (
+                    <li key={child._key}>
+                      <ExternalLink data={child} />
+                    </li>
+                  );
+                }
+                return null;
+              })}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+};
 
 export default NestedNavigation;

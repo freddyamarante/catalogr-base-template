@@ -7,7 +7,11 @@ export const internalLinkField = defineField({
   type: 'reference',
   to: [
     {type: 'home'},
-    {type: 'page'}
+    {type: 'catalogPage'},
+    {type: 'page'},
+    {type: 'catalog'},
+    {type: 'taxonomy'},
+    {type: 'taxon'}
   ],
 });
 
@@ -92,7 +96,7 @@ export default defineType({
           { title: 'Large', value: 'lg' },
           { title: 'Extra Large', value: 'xl' },
           { title: '2x Large', value: '2xl' }
-        ]
+        ],
       }
     }),
     defineField({

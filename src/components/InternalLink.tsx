@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import {stegaClean} from '@sanity/client/stega';
-import {cn} from '@/lib/utils';
+import { stegaClean } from '@sanity/client/stega';
+import { cn } from '@/lib/utils';
 
 export interface InternalLinkProps {
   children?: React.ReactNode;
@@ -26,18 +26,38 @@ const InternalLink: React.FC<InternalLinkProps> = ({
 }) => {
   if (!data?.link) return null;
 
-  const {link, name, anchor} = data;
+  const { link, name, anchor } = data;
   const documentType = link._type;
-  
+
   const slug = link.slug;
   const anchorHash = anchor ? `#${anchor}` : '';
 
   const path = () => {
-    switch(documentType) {
+    if (!slug) {
+      switch (documentType) {
+        case 'home':
+          return '/';
+        case 'catalogPage':
+          return '/catalogo';
+        default:
+          console.warn(`Unknown document type: ${documentType} or missing slug`);
+          return '/';
+      }
+    }
+
+    switch (documentType) {
       case 'home':
         return '/';
+      case 'catalogPage':
+        return '/catalogo';
       case 'page':
         return `/${slug}`;
+      case 'catalog':
+        return `/catalogo/${slug}`;
+      case 'taxonomy':
+        return `/categorias/${slug}`;
+      case 'taxon':
+        return `/categorias/${slug}`;
       default:
         console.warn(`Unknown document type: ${documentType}`);
         return '/';
@@ -58,6 +78,6 @@ const InternalLink: React.FC<InternalLinkProps> = ({
       {children || name}
     </Link>
   );
-}
+};
 
 export default InternalLink;
