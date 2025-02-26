@@ -94,3 +94,37 @@ export const HEADER_QUERY = defineQuery(`*[_type == "header"][0] {
     )
   }
 }`);
+
+export const CATALOG_QUERY = defineQuery(`{
+  "taxonomies": *[_type == "taxonomy"] {
+    _id,
+    name,
+    "taxons": taxons[]-> {
+      _id,
+      name,
+      description,
+      "products": products[]-> {
+        _id,
+        name,
+        description,
+        material,
+        careInstructions,
+        "variants": variants[]->{
+          _id,
+          size,
+          color,
+          sku,
+          "images": images[] {
+              _type,
+              _key,
+              asset-> {
+                  _type,
+                  url,
+                  "dimensions": dimensions
+              }
+          }
+        },
+      },
+    },
+  },
+}`);

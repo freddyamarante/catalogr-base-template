@@ -32,9 +32,10 @@ const sanityCommerceConfig: SanityCommercePluginConfig = {
     { name: 'size', title: 'Talla', type: 'string' },
     { name: 'color', title: 'Color', type: 'string' },
     { name: 'sku', title: 'SKU', type: 'string' },
+    { name: 'priceUSD', title: 'Precio USD', type: 'number', validation: Rule => Rule.min(0) },
+    { name: 'priceBs', title: 'Precio Bs', type: 'number', validation: Rule => Rule.min(0) },    
   ],
 };
-
 
 export default defineConfig({
   basePath: '/studio',

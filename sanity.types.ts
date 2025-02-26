@@ -632,7 +632,7 @@ export type PAGE_QUERYResult = {
   }> | null;
 } | null;
 // Variable: HEADER_QUERY
-// Query: *[_type == "header"][0] {  _type,  _id,  name,  logoSize,  navigation[] {    name,    _type,    _key,    ...,    link-> {      _type,      "slug": select(        // For pages        _type == "page" => slug.current,        // For home page        _type == "home" => "/",        null      )    },    openInNewTab,  }}
+// Query: *[_type == "header"][0] {  _type,  _id,  name,  logoSize,  navigation[] {    name,    _type,    _key,    ...,    link-> {      _type,      "slug": select(        // For pages        _type == "page" => slug.current,        // For home page        _type == "home" => "/",        null      )    },    openInNewTab,    "link": select(      _type == "internalLink" => link-> {        _type,        "slug": select(          // For pages          _type == "page" => slug.current,          // For home page          _type == "home" => "/",          null        )      },      _type == "externalLink" => link,      null    )  }}
 export type HEADER_QUERYResult = {
   _type: "header";
   _id: string;
@@ -642,7 +642,7 @@ export type HEADER_QUERYResult = {
     name?: string;
     _type: "externalLink";
     _key: string;
-    link: null;
+    link: string | null;
     openInNewTab: boolean | null;
   } | {
     name?: string;
@@ -658,10 +658,7 @@ export type HEADER_QUERYResult = {
     name?: string;
     _type: "nestedNavigation";
     _key: string;
-    link: {
-      _type: "home";
-      slug: "/";
-    } | null;
+    link: null;
     childLinks?: Array<{
       name?: string;
       link?: string;
@@ -683,6 +680,25 @@ export type HEADER_QUERYResult = {
     openInNewTab: null;
   }> | null;
 } | null;
+// Variable: PRODUCTS_QUERY
+// Query: *[_type == "product"] {  ...}
+export type PRODUCTS_QUERYResult = Array<{
+  _id: string;
+  _type: "product";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  description?: string;
+  variants?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "variant";
+  }>;
+  origin?: string;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -691,6 +707,7 @@ declare module "@sanity/client" {
     "*[_type == \"settings\"][0] {\n  _id,\n  _type,\n  storeName,\n  logo,\n  logoSize,\n  favicon,\n  spaceBetweenSections,\n  colorScheme {\n    primary,\n    secondary,\n    error,\n    success,\n    warning,\n    button,\n    border,\n    cardBackground,\n    text,\n    background,\n    foreground\n  }\n}": SETTINGS_QUERYResult;
     "*[_type == \"home\"][0] {\n  _id,\n  _type,\n  sections[] {\n    _type,\n    ...,\n    settings {\n      _type,\n      padding {\n        top,\n        bottom\n      },\n      customCss\n    }\n  }\n}": HOME_QUERYResult;
     "*[_type == \"page\"][0] {\n  _id,\n  _type,\n  sections[] {\n    _type,\n    ...,\n    settings {\n      _type,\n      padding {\n        top,\n        bottom\n      },\n      customCss\n    }\n  }\n}": PAGE_QUERYResult;
-    "*[_type == \"header\"][0] {\n  _type,\n  _id,\n  name,\n  logoSize,\n  navigation[] {\n    name,\n    _type,\n    _key,\n    ...,\n    link-> {\n      _type,\n      \"slug\": select(\n        // For pages\n        _type == \"page\" => slug.current,\n        // For home page\n        _type == \"home\" => \"/\",\n        null\n      )\n    },\n    openInNewTab,\n  }\n}": HEADER_QUERYResult;
+    "*[_type == \"header\"][0] {\n  _type,\n  _id,\n  name,\n  logoSize,\n  navigation[] {\n    name,\n    _type,\n    _key,\n    ...,\n    link-> {\n      _type,\n      \"slug\": select(\n        // For pages\n        _type == \"page\" => slug.current,\n        // For home page\n        _type == \"home\" => \"/\",\n        null\n      )\n    },\n    openInNewTab,\n    \"link\": select(\n      _type == \"internalLink\" => link-> {\n        _type,\n        \"slug\": select(\n          // For pages\n          _type == \"page\" => slug.current,\n          // For home page\n          _type == \"home\" => \"/\",\n          null\n        )\n      },\n      _type == \"externalLink\" => link,\n      null\n    )\n  }\n}": HEADER_QUERYResult;
+    "*[_type == \"product\"] {\n  ...\n}": PRODUCTS_QUERYResult;
   }
 }

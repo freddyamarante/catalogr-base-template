@@ -718,6 +718,110 @@
                             }
                           },
                           "dereferencesTo": "page"
+                        },
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "_ref": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "reference"
+                              }
+                            },
+                            "_weak": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "boolean"
+                              },
+                              "optional": true
+                            }
+                          },
+                          "dereferencesTo": "catalog"
+                        },
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "_ref": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "reference"
+                              }
+                            },
+                            "_weak": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "boolean"
+                              },
+                              "optional": true
+                            }
+                          },
+                          "dereferencesTo": "product"
+                        },
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "_ref": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "reference"
+                              }
+                            },
+                            "_weak": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "boolean"
+                              },
+                              "optional": true
+                            }
+                          },
+                          "dereferencesTo": "taxonomy"
+                        },
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "_ref": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "reference"
+                              }
+                            },
+                            "_weak": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "boolean"
+                              },
+                              "optional": true
+                            }
+                          },
+                          "dereferencesTo": "taxon"
                         }
                       ]
                     },
@@ -860,6 +964,110 @@
                             }
                           },
                           "dereferencesTo": "page"
+                        },
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "_ref": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "reference"
+                              }
+                            },
+                            "_weak": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "boolean"
+                              },
+                              "optional": true
+                            }
+                          },
+                          "dereferencesTo": "catalog"
+                        },
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "_ref": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "reference"
+                              }
+                            },
+                            "_weak": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "boolean"
+                              },
+                              "optional": true
+                            }
+                          },
+                          "dereferencesTo": "product"
+                        },
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "_ref": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "reference"
+                              }
+                            },
+                            "_weak": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "boolean"
+                              },
+                              "optional": true
+                            }
+                          },
+                          "dereferencesTo": "taxonomy"
+                        },
+                        {
+                          "type": "object",
+                          "attributes": {
+                            "_ref": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "_type": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string",
+                                "value": "reference"
+                              }
+                            },
+                            "_weak": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "boolean"
+                              },
+                              "optional": true
+                            }
+                          },
+                          "dereferencesTo": "taxon"
                         }
                       ]
                     },
@@ -938,6 +1146,110 @@
                                         }
                                       },
                                       "dereferencesTo": "page"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "attributes": {
+                                        "_ref": {
+                                          "type": "objectAttribute",
+                                          "value": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "_type": {
+                                          "type": "objectAttribute",
+                                          "value": {
+                                            "type": "string",
+                                            "value": "reference"
+                                          }
+                                        },
+                                        "_weak": {
+                                          "type": "objectAttribute",
+                                          "value": {
+                                            "type": "boolean"
+                                          },
+                                          "optional": true
+                                        }
+                                      },
+                                      "dereferencesTo": "catalog"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "attributes": {
+                                        "_ref": {
+                                          "type": "objectAttribute",
+                                          "value": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "_type": {
+                                          "type": "objectAttribute",
+                                          "value": {
+                                            "type": "string",
+                                            "value": "reference"
+                                          }
+                                        },
+                                        "_weak": {
+                                          "type": "objectAttribute",
+                                          "value": {
+                                            "type": "boolean"
+                                          },
+                                          "optional": true
+                                        }
+                                      },
+                                      "dereferencesTo": "product"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "attributes": {
+                                        "_ref": {
+                                          "type": "objectAttribute",
+                                          "value": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "_type": {
+                                          "type": "objectAttribute",
+                                          "value": {
+                                            "type": "string",
+                                            "value": "reference"
+                                          }
+                                        },
+                                        "_weak": {
+                                          "type": "objectAttribute",
+                                          "value": {
+                                            "type": "boolean"
+                                          },
+                                          "optional": true
+                                        }
+                                      },
+                                      "dereferencesTo": "taxonomy"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "attributes": {
+                                        "_ref": {
+                                          "type": "objectAttribute",
+                                          "value": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "_type": {
+                                          "type": "objectAttribute",
+                                          "value": {
+                                            "type": "string",
+                                            "value": "reference"
+                                          }
+                                        },
+                                        "_weak": {
+                                          "type": "objectAttribute",
+                                          "value": {
+                                            "type": "boolean"
+                                          },
+                                          "optional": true
+                                        }
+                                      },
+                                      "dereferencesTo": "taxon"
                                     }
                                   ]
                                 },
@@ -1862,24 +2174,17 @@
         },
         "optional": true
       },
-      "roastLevel": {
+      "size": {
         "type": "objectAttribute",
         "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "string",
-              "value": "light"
-            },
-            {
-              "type": "string",
-              "value": "medium"
-            },
-            {
-              "type": "string",
-              "value": "dark"
-            }
-          ]
+          "type": "string"
+        },
+        "optional": true
+      },
+      "color": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       }
@@ -2315,7 +2620,21 @@
         },
         "optional": true
       },
-      "origin": {
+      "brand": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "material": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "careInstructions": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
