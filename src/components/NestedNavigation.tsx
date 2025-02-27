@@ -23,24 +23,28 @@ const NestedNavigation: React.FC<NestedNavigationProps> = ({ data }) => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>{data.name}</NavigationMenuTrigger>
+          <NavigationMenuTrigger>
+            <InternalLink data={data} className="text-lg font-bold">
+              {data.name}
+            </InternalLink>
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+            <ul className="relative grid gap-3 p-4 grid-cols-2 w-max">
               {data.childLinks?.map((child) => {
-                if (child?._type === 'internalLink') {
-                  return (
-                    <li key={child._key}>
-                      <InternalLink data={child} />
-                    </li>
-                  );
-                } else if (child?._type === 'externalLink') {
-                  return (
-                    <li key={child._key}>
-                      <ExternalLink data={child} />
-                    </li>
-                  );
-                }
-                return null;
+              if (child?._type === 'internalLink') {
+                return (
+                <li key={child._key} className="w-max">
+                  <InternalLink data={child} className="text-lg font-bold" />
+                </li>
+                );
+              } else if (child?._type === 'externalLink') {
+                return (
+                <li key={child._key} className="w-max">
+                  <ExternalLink data={child} className="text-lg font-bold" />
+                </li>
+                );
+              }
+              return null;
               })}
             </ul>
           </NavigationMenuContent>

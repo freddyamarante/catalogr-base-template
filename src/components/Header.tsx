@@ -46,8 +46,8 @@ const Header: React.FC = () => {
   }
 
   return (
-    <header className="w-full h-fit mt-10 px-3 sm:px-24">
-      <div className="flex items-center justify-between h-full rounded-3xl">
+    <header className="w-full h-fit mt-10 px-2 sm:px-20">
+      <div className="flex items-center justify-between h-full border border-border py-5 px-6">
         <Link className="w-fit h-fit" href="/" onClick={() => window.location.href = '/'}>
           <Logo svg={settings.logo || ''} size={header.logoSize || 'auto'} />
         </Link>
@@ -62,7 +62,7 @@ const Header: React.FC = () => {
                   <div key={navItem._key} className="relative group">
                     <ExternalLink
                       data={navItem}
-                      className="text-sm hover:text-primary"
+                      className="text-lg font-bold"
                     />
                   </div>
                 )
@@ -78,7 +78,7 @@ const Header: React.FC = () => {
                           slug: navItem.link.slug, 
                         } : undefined
                       }}
-                      className="text-sm hover:text-primary"
+                      className="text-lg font-bold"
                     />
                   </div>
                 )
