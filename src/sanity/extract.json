@@ -605,13 +605,6 @@
           "type": "string"
         }
       },
-      "name": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
       "logoSize": {
         "type": "objectAttribute",
         "value": {

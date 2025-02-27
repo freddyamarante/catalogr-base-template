@@ -1,6 +1,7 @@
+// Header.tsx
 'use client'
 
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Logo from "./Logo";
 import { useSettings } from "./context/SettingsContext";
 import InternalLink from "./InternalLink";
@@ -13,18 +14,24 @@ import Link from "next/link";
 import NestedNavigation from "./NestedNavigation";
 
 const Header: React.FC = () => {
-  const settings = useSettings()
-  const [header, setHeader] = React.useState<HEADER_QUERYResult>(null)
+  const settings = useSettings();
+  const [header, setHeader] = React.useState<HEADER_QUERYResult>(null);
 
   useEffect(() => {
     async function getHeader() {
-      const header = await client.fetch(HEADER_QUERY, {})
-      setHeader(header)
+      const header = await client.fetch(HEADER_QUERY, {});
+      setHeader(header);
     }
-    getHeader()
-  }, [])
+    getHeader();
+  }, []);
 
-  if (!header) { 
+  useEffect(() => {
+    if (header) {
+      console.log(header);
+    }
+  }, [header])
+
+  if (!header) {
     return (
       <header className="w-full h-fit mt-10 px-3 sm:px-24">
         <div className="flex items-center justify-between h-full rounded-3xl">
@@ -33,7 +40,6 @@ const Header: React.FC = () => {
               <Skeleton className="w-24 h-12" />
             </div>
           </Link>
-
           <div className="flex justify-end items-center gap-x-4">
             <Skeleton className="w-16 h-12" />
             <Skeleton className="w-10 h-12" />
@@ -41,62 +47,43 @@ const Header: React.FC = () => {
           </div>
         </div>
       </header>
-    )
+    );
   }
 
   return (
-    <header className="w-full h-fit mt-10 px-2 sm:px-20">
-      <div className="flex items-center justify-between h-full border border-border py-5 px-6">
-        <Link className="w-fit h-fit" href="/" onClick={() => window.location.href = '/'}>
-          <Logo svg={settings.logo || ''} size={header.logoSize || 'auto'} />
+    <header className="w-full h-fit mt-2">
+      <div className="flex items-center justify-between h-full border-b border-border py-5 px-24">
+        <Link className="w-fit h-fit" href="/" onClick={() => (window.location.href = "/")}>
+          <Logo svg={settings.logo || ""} size={header.logoSize || "auto"} />
         </Link>
-
         <nav className="flex justify-end items-center gap-x-4">
           {header.navigation?.map((navItem) => {
-            if (!navItem) return null
-            
-            switch(navItem._type) {
-              case 'externalLink':
-                return (
-                    <div key={navItem._key} className="relative group">
-                    <ExternalLink
-                      data={{ ...navItem, name: navItem.name || undefined }}
-                      className="text-lg font-bold"
-                    />
-                    </div>
-                )
-              
-              case 'internalLink':
+            if (!navItem) return null;
+
+            switch (navItem._type) {
+              case "externalLink":
                 return (
                   <div key={navItem._key} className="relative group">
-                    <InternalLink
-                      data={{
-                        ...navItem,
-                        link: navItem.link && navItem.link.slug ? {
-                          _type: navItem.link._type,
-                          slug: navItem.link.slug,
-                        } : undefined
-                      }}
-                      className="text-lg font-bold"
-                    />
+                    <ExternalLink data={navItem} className="text-lg font-bold" />
                   </div>
-                )
-              
-              case 'nestedNavigation':
+                );
+
+              case "internalLink":
                 return (
-                    <div key={navItem._key} className="relative group">
-                      <NestedNavigation
-                        data={{
-                          ...navItem,
-                          name: navItem.name || '',
-                          childLinks: navItem.childLinks || undefined,
-                        }}
-                      />
-                    </div>
-                )
-              
+                  <div key={navItem._key} className="relative group">
+                    <InternalLink data={navItem} className="text-lg font-bold" />
+                  </div>
+                );
+
+              case "nestedNavigation":
+                return (
+                  <div key={navItem._key} className="relative group">
+                    <NestedNavigation data={navItem} />
+                  </div>
+                );
+
               default:
-                return null
+                return null;
             }
           })}
         </nav>

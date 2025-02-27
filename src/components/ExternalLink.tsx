@@ -7,14 +7,13 @@ export interface ExternalLinkProps {
   className?: HTMLDivElement['className'];
   data: {
     _type: "externalLink";
-    name?: string;
+    name?: string | null;
     link?: string | null;
-    openInNewTab?: boolean;
+    openInNewTab?: boolean | null | undefined;
     _key: string;
   }
 }
   
-
 const ExternalLink: React.FC<ExternalLinkProps> = ({
   children,
   className,

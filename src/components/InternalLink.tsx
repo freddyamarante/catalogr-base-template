@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { stegaClean } from '@sanity/client/stega';
 import { cn } from '@/lib/utils';
 
 export interface InternalLinkProps {
@@ -10,8 +9,8 @@ export interface InternalLinkProps {
     name?: string | null;
     link?: {
       _type: string;
-      slug?: string;
-    };
+      slug?: string | null; 
+    } | null;
     anchor?: string;
     _key: string;
   };
@@ -24,29 +23,16 @@ const InternalLink: React.FC<InternalLinkProps> = ({
   data,
   onClick,
 }) => {
-  if (!data?.link) return null;
-
-  const { link, name, anchor } = data;
-  const documentType = link._type;
-
-  const slug = link.slug;
-  const anchorHash = anchor ? `#${anchor}` : '';
+  const linkedDoc = data?.link;
+  
+  const slug = linkedDoc?.slug || '';
+  const docType = linkedDoc?._type;
 
   const path = () => {
-    if (!slug) {
-      switch (documentType) {
-        case 'home':
-          return '/';
-        case 'catalogPage':
-          return '/catalogo';
-        default:
-          console.warn(`Unknown document type: ${documentType} or missing slug`);
-          return '/';
-      }
-    }
-
-    switch (documentType) {
-      case 'home':
+    if (!docType) return '/';
+    
+    switch (docType) {
+      case 'home': 
         return '/';
       case 'catalogPage':
         return '/catalogo';
@@ -54,17 +40,10 @@ const InternalLink: React.FC<InternalLinkProps> = ({
         return `/${slug}`;
       case 'catalog':
         return `/catalogo/${slug}`;
-      case 'taxonomy':
-        return `/categorias/${slug}`;
-      case 'taxon':
-        return `/categorias/${slug}`;
       default:
-        console.warn(`Unknown document type: ${documentType}`);
         return '/';
     }
   };
-
-  const url = stegaClean(`${path()}${anchorHash}`);
 
   return (
     <Link
@@ -73,9 +52,9 @@ const InternalLink: React.FC<InternalLinkProps> = ({
         className
       )}
       onClick={onClick}
-      href={url}
+      href={path()}
     >
-      {children || name}
+      {children || data?.name}
     </Link>
   );
 };

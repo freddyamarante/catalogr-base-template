@@ -80,11 +80,6 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'name',
-      title: 'Name',
-      type: 'string'
-    }),
-    defineField({
       name: 'logoSize',
       title: 'Logo Size',
       type: 'string',

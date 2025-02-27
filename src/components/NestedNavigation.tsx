@@ -13,23 +13,24 @@ import ExternalLink from "./ExternalLink";
 
 interface NestedNavigationProps {
   data: {
-    name: string;
+    _type: "nestedNavigation";
+    name?: string | null;
+    link?: {
+      _type: string;
+      slug?: string | null;
+    } | null;
     childLinks?: Array<{
-      _type: "externalLink";
-      name?: string | null
-      link?: string | null;
-      openInNewTab?: boolean | null;
-      _key: string;
-    } | {
-      _type: "internalLink";
+      _type: "externalLink" | "internalLink";
       name?: string | null;
       link?: {
         _type: string;
         slug?: string | null;
-      } | null;
+      } | string | null;
+      openInNewTab?: boolean | null;
       anchor?: string;
       _key: string;
-    }>;
+    } | null> | null;
+    _key: string;
   };
 }
 
@@ -49,20 +50,13 @@ const NestedNavigation: React.FC<NestedNavigationProps> = ({ data }) => {
                 if (child?._type === 'internalLink') {
                   return (
                     <li key={child._key} className="w-max">
-                      <InternalLink data={{
-                        ...child,
-                        link: child.link && child.link.slug ? {
-                          _type: child.link._type,
-                          slug: child.link.slug,
-                          } : undefined
-                        }} 
-                      className="text-lg font-bold" />
+                      <InternalLink data={child as Extract<typeof child, { _type: "internalLink" }>} className="text-lg font-bold" />
                     </li>
                   );
                 } else if (child?._type === 'externalLink') {
                   return (
                     <li key={child._key} className="w-max">
-                      <ExternalLink data={{ ...child, name: child.name || undefined, openInNewTab: child.openInNewTab ?? undefined }} className="text-lg font-bold" />
+                      <ExternalLink data={child as Extract<typeof child, { _type: "externalLink" }>} className="text-lg font-bold" />
                     </li>
                   );
                 }

@@ -57,27 +57,30 @@ export const PAGE_QUERY = defineQuery(`*[_type == "page"][0] {
   }
 }`);
 
-export const HEADER_QUERY = defineQuery(`*[ _type == "header" ][0] {
-  name,
-  logoSize,
-  navigation[] {
-    _type,
-    _key,
-    name,
-    link-> {
-      _type,
-      "slug": slug.current
+export const HEADER_QUERY = defineQuery(`*[_type == "header"][0]{
+  ...,
+  navigation[]{
+    ...,
+    _type == "internalLink" => {
+      ...,
+      link->{
+        _type,
+        "slug": slug.current,
+      }
     },
-    childLinks[] {
-      _type,
-      _key,
-      name,
-      link-> {
+    _type == "nestedNavigation" => {
+      ...,
+      link->{
         _type,
         "slug": slug.current
       },
-      link,
-      openInNewTab
+      childLinks[]{
+        ...,
+        link->{
+          _type,
+          "slug": slug.current
+        }
+      }
     }
   }
 }`);
