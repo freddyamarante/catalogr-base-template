@@ -632,52 +632,51 @@ export type PAGE_QUERYResult = {
   }> | null;
 } | null;
 // Variable: HEADER_QUERY
-// Query: *[_type == "header"][0] {  _type,  _id,  name,  logoSize,  navigation[] {    name,    _type,    _key,    ...,    link-> {      _type,      "slug": select(        // For pages        _type == "page" => slug.current,        // For home page        _type == "home" => "/",        null      )    },    openInNewTab,    "link": select(      _type == "internalLink" => link-> {        _type,        "slug": select(          // For pages          _type == "page" => slug.current,          // For home page          _type == "home" => "/",          null        )      },      _type == "externalLink" => link,      null    )  }}
+// Query: *[ _type == "header" ][0] {  name,  logoSize,  navigation[] {    _type,    _key,    name,    link-> {      _type,      "slug": slug.current    },    childLinks[] {      _type,      _key,      name,      link-> {        _type,        "slug": slug.current      },      link,      openInNewTab    }  }}
 export type HEADER_QUERYResult = {
-  _type: "header";
-  _id: string;
   name: string | null;
   logoSize: "2xl" | "auto" | "lg" | "md" | "sm" | "xl" | null;
   navigation: Array<{
-    name?: string;
     _type: "externalLink";
     _key: string;
-    link: string | null;
-    openInNewTab: boolean | null;
+    name: string | null;
+    link: null;
+    childLinks: null;
   } | {
-    name?: string;
     _type: "internalLink";
     _key: string;
+    name: string | null;
     link: {
       _type: "home";
-      slug: "/";
+      slug: null;
     } | null;
-    anchor?: string;
-    openInNewTab: null;
+    childLinks: null;
   } | {
-    name?: string;
     _type: "nestedNavigation";
     _key: string;
-    link: null;
-    childLinks?: Array<{
-      name?: string;
-      link?: string;
-      openInNewTab?: boolean;
+    name: string | null;
+    link: {
+      _type: "home";
+      slug: null;
+    } | null;
+    childLinks: Array<{
       _type: "externalLink";
       _key: string;
+      name: string | null;
+      link: string | null;
+      openInNewTab: boolean | null;
     } | {
-      name?: string;
-      link?: {
+      _type: "internalLink";
+      _key: string;
+      name: string | null;
+      link: {
         _ref: string;
         _type: "reference";
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "home";
-      };
-      anchor?: string;
-      _type: "internalLink";
-      _key: string;
-    }>;
-    openInNewTab: null;
+      } | null;
+      openInNewTab: null;
+    }> | null;
   }> | null;
 } | null;
 // Variable: CATALOG_QUERY
@@ -723,7 +722,7 @@ declare module "@sanity/client" {
     "*[_type == \"settings\"][0] {\n  _id,\n  _type,\n  storeName,\n  logo,\n  logoSize,\n  favicon,\n  spaceBetweenSections,\n  colorScheme {\n    primary,\n    secondary,\n    error,\n    success,\n    warning,\n    button,\n    border,\n    cardBackground,\n    text,\n    background,\n    foreground\n  }\n}": SETTINGS_QUERYResult;
     "*[_type == \"home\"][0] {\n  _id,\n  _type,\n  sections[] {\n    _type,\n    ...,\n    settings {\n      _type,\n      padding {\n        top,\n        bottom\n      },\n      customCss\n    }\n  }\n}": HOME_QUERYResult;
     "*[_type == \"page\"][0] {\n  _id,\n  _type,\n  sections[] {\n    _type,\n    ...,\n    settings {\n      _type,\n      padding {\n        top,\n        bottom\n      },\n      customCss\n    }\n  }\n}": PAGE_QUERYResult;
-    "*[_type == \"header\"][0] {\n  _type,\n  _id,\n  name,\n  logoSize,\n  navigation[] {\n    name,\n    _type,\n    _key,\n    ...,\n    link-> {\n      _type,\n      \"slug\": select(\n        // For pages\n        _type == \"page\" => slug.current,\n        // For home page\n        _type == \"home\" => \"/\",\n        null\n      )\n    },\n    openInNewTab,\n    \"link\": select(\n      _type == \"internalLink\" => link-> {\n        _type,\n        \"slug\": select(\n          // For pages\n          _type == \"page\" => slug.current,\n          // For home page\n          _type == \"home\" => \"/\",\n          null\n        )\n      },\n      _type == \"externalLink\" => link,\n      null\n    )\n  }\n}": HEADER_QUERYResult;
+    "*[ _type == \"header\" ][0] {\n  name,\n  logoSize,\n  navigation[] {\n    _type,\n    _key,\n    name,\n    link-> {\n      _type,\n      \"slug\": slug.current\n    },\n    childLinks[] {\n      _type,\n      _key,\n      name,\n      link-> {\n        _type,\n        \"slug\": slug.current\n      },\n      link,\n      openInNewTab\n    }\n  }\n}": HEADER_QUERYResult;
     "{\n  \"taxonomies\": *[_type == \"taxonomy\"] {\n    _id,\n    name,\n    \"taxons\": taxons[]-> {\n      _id,\n      name,\n      description,\n      \"products\": products[]-> {\n        _id,\n        name,\n        description,\n        material,\n        careInstructions,\n        \"variants\": variants[]->{\n          _id,\n          size,\n          color,\n          sku,\n          \"images\": images[] {\n              _type,\n              _key,\n              asset-> {\n                  _type,\n                  url,\n                  \"dimensions\": dimensions\n              }\n          }\n        },\n      },\n    },\n  },\n}": CATALOG_QUERYResult;
   }
 }

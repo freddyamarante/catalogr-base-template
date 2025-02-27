@@ -22,7 +22,6 @@ const Header: React.FC = () => {
       setHeader(header)
     }
     getHeader()
-
   }, [])
 
   if (!header) { 
@@ -59,12 +58,12 @@ const Header: React.FC = () => {
             switch(navItem._type) {
               case 'externalLink':
                 return (
-                  <div key={navItem._key} className="relative group">
+                    <div key={navItem._key} className="relative group">
                     <ExternalLink
-                      data={navItem}
+                      data={{ ...navItem, name: navItem.name || undefined }}
                       className="text-lg font-bold"
                     />
-                  </div>
+                    </div>
                 )
               
               case 'internalLink':
@@ -73,9 +72,9 @@ const Header: React.FC = () => {
                     <InternalLink
                       data={{
                         ...navItem,
-                        link: navItem.link ? {
+                        link: navItem.link && navItem.link.slug ? {
                           _type: navItem.link._type,
-                          slug: navItem.link.slug, 
+                          slug: navItem.link.slug,
                         } : undefined
                       }}
                       className="text-lg font-bold"
@@ -85,9 +84,15 @@ const Header: React.FC = () => {
               
               case 'nestedNavigation':
                 return (
-                  <div key={navItem._key} className="relative group">
-                    <NestedNavigation data={navItem} />
-                  </div>
+                    <div key={navItem._key} className="relative group">
+                      <NestedNavigation
+                        data={{
+                          ...navItem,
+                          name: navItem.name || '',
+                          childLinks: navItem.childLinks || undefined,
+                        }}
+                      />
+                    </div>
                 )
               
               default:

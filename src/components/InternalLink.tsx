@@ -7,7 +7,7 @@ export interface InternalLinkProps {
   className?: string;
   data?: {
     _type: "internalLink";
-    name?: string;
+    name?: string | null;
     link?: {
       _type: string;
       slug?: string;

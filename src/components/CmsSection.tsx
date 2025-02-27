@@ -1,15 +1,15 @@
 import React from "react";
-import { sections } from "@/sanity/lib/globals/sectionResolver";
+import sections from "@/sanity/lib/globals/sectionResolver";
 import { Sections } from "../../sanity.types";
 
-type Section = Sections[number]
+type Section = Sections[number];
 
-interface CmsSectionProps {
-  data: Section;
+interface CmsSectionProps<T extends Section> {
+  data: T;
 }
 
-const CmsSection: React.FC<CmsSectionProps> = ({ data }) => {
-  const SectionComponent = sections[data._type as keyof typeof sections] as unknown as React.FC<Section>;
+const CmsSection = <T extends Section>({ data }: CmsSectionProps<T>): React.JSX.Element => {
+  const SectionComponent = sections[data._type as keyof typeof sections] as React.FC<T>;
 
   const uniqueId = React.useMemo(() => `section-${Math.random().toString(36).substr(2, 9)}`, []);
 

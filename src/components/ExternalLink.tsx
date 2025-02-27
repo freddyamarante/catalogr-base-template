@@ -8,7 +8,7 @@ export interface ExternalLinkProps {
   data: {
     _type: "externalLink";
     name?: string;
-    link?: string;
+    link?: string | null;
     openInNewTab?: boolean;
     _key: string;
   }
