@@ -48,7 +48,7 @@ const InternalLink: React.FC<InternalLinkProps> = ({
   return (
     <Link
       className={cn(
-        'focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 text-nowrap',
+        'focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 text-nowrap hover:text-foreground hover:bg-border rounded-md p-1.5 leading-7 h-8 flex items-center',
         className
       )}
       onClick={onClick}

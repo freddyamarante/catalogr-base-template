@@ -48,7 +48,7 @@ export default async function RootLayout({
         <SettingsProvider settings={settingsData}>
           <ThemeProvider settings={validatedSettings}>
             <Header />
-            <main className="flex flex-col gap-y-[calc(var(--space-between-sections)*.75)] sm:gap-y-[--space-between-sections] px-3 sm:px-24 overflow-hidden">
+            <main className="flex flex-col gap-y-[calc(var(--space-between-sections)*.75)] sm:gap-y-[--space-between-sections] px-4 sm:px-24 overflow-hidden">
               {children}
             </main>
           </ThemeProvider>

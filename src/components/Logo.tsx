@@ -4,12 +4,13 @@ import React from "react";
 interface LogoProps {
   svg?: string;
   size?: 'auto' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'; 
+  className?: HTMLDivElement['className'];
 }
 
-const Logo: React.FC<LogoProps> = ({svg, size = 'auto'}) => {
+const Logo: React.FC<LogoProps> = ({svg, size = 'auto', className}) => {
   if (!svg || svg === '') {
     return (
-      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary">
+      <div className={cn('flex items-center justify-center w-12 h-12 rounded-full bg-primary', className)}>
         <span className="text-white text-2xl font-bold">Logo</span>
       </div>
     );
@@ -25,7 +26,7 @@ const Logo: React.FC<LogoProps> = ({svg, size = 'auto'}) => {
   }
 
   return (
-    <div className={cn(sizes[size])} dangerouslySetInnerHTML={{ __html: svg }}></div>
+    <div className={cn(sizes[size], className)} dangerouslySetInnerHTML={{ __html: svg }}></div>
   );
 };
 

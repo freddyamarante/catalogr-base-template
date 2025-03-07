@@ -36,27 +36,36 @@ interface NestedNavigationProps {
 
 const NestedNavigation: React.FC<NestedNavigationProps> = ({ data }) => {
   return (
-    <NavigationMenu>
+    <NavigationMenu className="custom-navigation-menu">
       <NavigationMenuList>
-        <NavigationMenuItem>
+        <NavigationMenuItem className="w-full">
           <NavigationMenuTrigger>
-            <InternalLink data={{ ...data, _type: "internalLink", _key: "root" }} className="text-lg font-bold">
+            <InternalLink
+              data={{ ...data, _type: "internalLink", _key: "root" }}
+              className="text-lg font-bold"
+            >
               {data.name}
             </InternalLink>
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="relative grid gap-3 p-4 grid-cols-2 w-max">
               {data.childLinks?.map((child) => {
-                if (child?._type === 'internalLink') {
+                if (child?._type === "internalLink") {
                   return (
-                    <li key={child._key} className="w-max">
-                      <InternalLink data={child as Extract<typeof child, { _type: "internalLink" }>} className="text-lg font-bold" />
+                    <li key={child._key} className="w-full">
+                      <InternalLink
+                        data={child as Extract<typeof child, { _type: "internalLink" }>}
+                        className="text-lg font-bold"
+                      />
                     </li>
                   );
-                } else if (child?._type === 'externalLink') {
+                } else if (child?._type === "externalLink") {
                   return (
-                    <li key={child._key} className="w-max">
-                      <ExternalLink data={child as Extract<typeof child, { _type: "externalLink" }>} className="text-lg font-bold" />
+                    <li key={child._key} className="w-full">
+                      <ExternalLink
+                        data={child as Extract<typeof child, { _type: "externalLink" }>}
+                        className="text-lg font-bold"
+                      />
                     </li>
                   );
                 }

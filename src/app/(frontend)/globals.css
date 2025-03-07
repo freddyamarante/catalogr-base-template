@@ -76,4 +76,8 @@
   .noise-light {
     background-image: url('/assets/noise-light.png');
   }
+  
+  .custom-navigation-menu > div:first-child {
+    width: 100%;
+  }
 }

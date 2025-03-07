@@ -26,7 +26,7 @@ const ExternalLink: React.FC<ExternalLinkProps> = ({
   return link ? (
     <a
       className={cn([
-        'focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 text-nowrap text-xl',
+        'focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 text-nowrap text-xl hover:text-foreground hover:bg-border rounded-md p-1.5 leading-7 h-8 flex items-center',
         className,
       ])}
       href={link}
