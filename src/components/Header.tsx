@@ -35,12 +35,6 @@ const Header: React.FC = () => {
     getHeader();
   }, []);
 
-  useEffect(() => {
-    if (header) {
-      console.log(header);
-    }
-  }, [header])
-
   if (!header) {
     return (
       <header className="w-full h-fit mt-10 px-3 sm:px-24">

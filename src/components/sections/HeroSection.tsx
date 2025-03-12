@@ -6,7 +6,7 @@ import ImageCarousel from '../ImageCarousel';
 const HeroSection: React.FC<HeroSectionProps> = ({ title, description, carouselImages, callToActionLabel }) => {
   return (
     <>
-      <div className="w-full mx-auto my-16 max-w-full">
+      <div className="w-full mx-auto max-w-full">
         <div className="flex flex-col h-full">
           {title && <h1 className="text-4xl lg:text-5xl font-bold tracking-wider">{title}</h1>}
           {description && <p className="text-lg mt-4">{description}</p>}
