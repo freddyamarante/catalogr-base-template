@@ -7,6 +7,8 @@ export const SETTINGS_QUERY = defineQuery(`*[_type == "settings"][0] {
   logo,
   logoSize,
   favicon,
+  currency,
+  showPrice,
   spaceBetweenSections,
   colorScheme {
     primary,
@@ -104,6 +106,8 @@ export const CATALOG_QUERY = defineQuery(`{
           size,
           color,
           sku,
+          priceUSD,
+          priceBs,
           "images": images[] {
               _type,
               _key,

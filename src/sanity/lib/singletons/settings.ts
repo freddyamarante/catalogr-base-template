@@ -28,6 +28,22 @@ export default defineType({
       validation: Rule => Rule.min(0).max(1000)
     }),
     defineField({
+      name: 'currency',
+      title: 'Currency',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'USD', value: 'USD' },
+          { title: 'Bs', value: 'Bs' }
+        ]
+      }
+    }),
+    defineField({
+      name: 'showPrice',
+      title: 'Show Price',
+      type: 'boolean',
+    }),
+    defineField({
       name: 'colorScheme',
       title: 'Color Scheme',
       type: 'object',
@@ -88,6 +104,8 @@ export default defineType({
   initialValue: {
     storeName: 'My Store',
     spaceBetweenSections: 40,
+    currency: 'USD',
+    showPrice: true,
     colorScheme: {
       primary: '#C2C2C2',
       secondary: '#00CED1',

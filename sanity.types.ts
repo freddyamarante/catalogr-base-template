@@ -498,7 +498,7 @@ export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/lib/queries.ts
 // Variable: SETTINGS_QUERY
-// Query: *[_type == "settings"][0] {  _id,  _type,  storeName,  logo,  logoSize,  favicon,  spaceBetweenSections,  colorScheme {    primary,    secondary,    error,    success,    warning,    button,    border,    cardBackground,    text,    background,    foreground  }}
+// Query: *[_type == "settings"][0] {  _id,  _type,  storeName,  logo,  logoSize,  favicon,  currency,  showPrice,  spaceBetweenSections,  colorScheme {    primary,    secondary,    error,    success,    warning,    button,    border,    cardBackground,    text,    background,    foreground  }}
 export type SETTINGS_QUERYResult = {
   _id: string;
   _type: "settings";
@@ -516,6 +516,8 @@ export type SETTINGS_QUERYResult = {
     crop?: SanityImageCrop;
     _type: "image";
   } | null;
+  currency: null;
+  showPrice: null;
   spaceBetweenSections: number | null;
   colorScheme: {
     primary: Color | null;
@@ -683,7 +685,7 @@ export type HEADER_QUERYResult = {
   }> | null;
 } | null;
 // Variable: CATALOG_QUERY
-// Query: {  "taxonomies": *[_type == "taxonomy"] {    _id,    name,    "taxons": taxons[]-> {      _id,      name,      description,      "products": products[]-> {        _id,        name,        description,        material,        careInstructions,        "variants": variants[]->{          _id,          size,          color,          sku,          "images": images[] {              _type,              _key,              asset-> {                  _type,                  url,                  "dimensions": dimensions              }          }        },      },    },  },}
+// Query: {  "taxonomies": *[_type == "taxonomy"] {    _id,    name,    "taxons": taxons[]-> {      _id,      name,      description,      "products": products[]-> {        _id,        name,        description,        material,        careInstructions,        "variants": variants[]->{          _id,          size,          color,          sku,          priceUSD,          priceBs,          "images": images[] {              _type,              _key,              asset-> {                  _type,                  url,                  "dimensions": dimensions              }          }        },      },    },  },}
 export type CATALOG_QUERYResult = {
   taxonomies: Array<{
     _id: string;
@@ -703,6 +705,8 @@ export type CATALOG_QUERYResult = {
           size: null;
           color: null;
           sku: string | null;
+          priceUSD: null;
+          priceBs: null;
           images: Array<{
             _type: "image";
             _key: string;
@@ -722,10 +726,10 @@ export type CATALOG_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"settings\"][0] {\n  _id,\n  _type,\n  storeName,\n  logo,\n  logoSize,\n  favicon,\n  spaceBetweenSections,\n  colorScheme {\n    primary,\n    secondary,\n    error,\n    success,\n    warning,\n    button,\n    border,\n    cardBackground,\n    text,\n    background,\n    foreground\n  }\n}": SETTINGS_QUERYResult;
+    "*[_type == \"settings\"][0] {\n  _id,\n  _type,\n  storeName,\n  logo,\n  logoSize,\n  favicon,\n  currency,\n  showPrice,\n  spaceBetweenSections,\n  colorScheme {\n    primary,\n    secondary,\n    error,\n    success,\n    warning,\n    button,\n    border,\n    cardBackground,\n    text,\n    background,\n    foreground\n  }\n}": SETTINGS_QUERYResult;
     "*[_type == \"home\"][0] {\n  _id,\n  _type,\n  sections[] {\n    _type,\n    ...,\n    settings {\n      _type,\n      padding {\n        top,\n        bottom\n      },\n      customCss\n    }\n  }\n}": HOME_QUERYResult;
     "*[_type == \"page\"][0] {\n  _id,\n  _type,\n  sections[] {\n    _type,\n    ...,\n    settings {\n      _type,\n      padding {\n        top,\n        bottom\n      },\n      customCss\n    }\n  }\n}": PAGE_QUERYResult;
     "*[_type == \"header\"][0]{\n  ...,\n  navigation[]{\n    ...,\n    _type == \"internalLink\" => {\n      ...,\n      link->{\n        _type,\n        \"slug\": slug.current,\n      }\n    },\n    _type == \"nestedNavigation\" => {\n      ...,\n      link->{\n        _type,\n        \"slug\": slug.current\n      },\n      childLinks[]{\n        ...,\n        link->{\n          _type,\n          \"slug\": slug.current\n        }\n      }\n    }\n  }\n}": HEADER_QUERYResult;
-    "{\n  \"taxonomies\": *[_type == \"taxonomy\"] {\n    _id,\n    name,\n    \"taxons\": taxons[]-> {\n      _id,\n      name,\n      description,\n      \"products\": products[]-> {\n        _id,\n        name,\n        description,\n        material,\n        careInstructions,\n        \"variants\": variants[]->{\n          _id,\n          size,\n          color,\n          sku,\n          \"images\": images[] {\n              _type,\n              _key,\n              asset-> {\n                  _type,\n                  url,\n                  \"dimensions\": dimensions\n              }\n          }\n        },\n      },\n    },\n  },\n}": CATALOG_QUERYResult;
+    "{\n  \"taxonomies\": *[_type == \"taxonomy\"] {\n    _id,\n    name,\n    \"taxons\": taxons[]-> {\n      _id,\n      name,\n      description,\n      \"products\": products[]-> {\n        _id,\n        name,\n        description,\n        material,\n        careInstructions,\n        \"variants\": variants[]->{\n          _id,\n          size,\n          color,\n          sku,\n          priceUSD,\n          priceBs,\n          \"images\": images[] {\n              _type,\n              _key,\n              asset-> {\n                  _type,\n                  url,\n                  \"dimensions\": dimensions\n              }\n          }\n        },\n      },\n    },\n  },\n}": CATALOG_QUERYResult;
   }
 }

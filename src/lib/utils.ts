@@ -55,3 +55,28 @@ export const validateSettings = (data: SETTINGS_QUERYResult): ValidSettings => {
     },
   };
 };
+
+export const generateRandomAspectRatioHeight = () => {
+  const aspectRatios = [1, 2, 3];
+  const randomIndex = Math.floor(Math.random() * aspectRatios.length);
+  const aspectRatio = aspectRatios[randomIndex];
+
+  let aspectRatioClass;
+
+  switch (aspectRatio) {
+    case 1:
+      aspectRatioClass = 'aspect-[1/1]';
+      break;
+    case 2:
+      aspectRatioClass = 'aspect-[8/9]';
+      break;
+    case 3:
+      aspectRatioClass = 'aspect-[8/10]';
+      break;
+    default: 
+      aspectRatioClass = 'aspect-[1/1]';
+      break;  
+  }
+
+  return aspectRatioClass;
+}

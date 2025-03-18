@@ -1687,6 +1687,30 @@
         },
         "optional": true
       },
+      "currency": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "USD"
+            },
+            {
+              "type": "string",
+              "value": "Bs"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "showPrice": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "colorScheme": {
         "type": "objectAttribute",
         "value": {
