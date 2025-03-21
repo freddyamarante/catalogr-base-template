@@ -25,12 +25,14 @@ const sanityCommerceConfig: SanityCommercePluginConfig = {
   taxonLabel: 'Categoría',
   productAttributes: [
     { name: 'brand', title: 'Marca', type: 'string' },
+    { name: 'slug', title: 'Slug', type: 'slug', options: { source: 'name' } },
     { name: 'material', title: 'Material', type: 'string' },
     { name: 'careInstructions', title: 'Instrucciones de Cuidado', type: 'text' },
   ],
   variantAttributes: [
     { name: 'size', title: 'Talla', type: 'string' },
     { name: 'color', title: 'Color', type: 'string' },
+    { name: 'colorRgb', title: 'Color RGB', type: 'color' },
     { name: 'sku', title: 'SKU', type: 'string' },
     { name: 'priceUSD', title: 'Precio USD', type: 'number', validation: Rule => Rule.min(0) },
     { name: 'priceBs', title: 'Precio Bs', type: 'number', validation: Rule => Rule.min(0) },    

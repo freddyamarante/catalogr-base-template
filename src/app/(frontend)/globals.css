@@ -104,4 +104,8 @@
   .custom-navigation-menu > div:first-child {
     width: 100%;
   }
+
+  .custom-carousel > div:first-child {
+    overflow: visible !important;
+  }
 }

@@ -685,7 +685,7 @@ export type HEADER_QUERYResult = {
   }> | null;
 } | null;
 // Variable: CATALOG_QUERY
-// Query: {  "taxonomies": *[_type == "taxonomy"] {    _id,    name,    "taxons": taxons[]-> {      _id,      name,      description,      "products": products[]-> {        _id,        name,        description,        material,        careInstructions,        "variants": variants[]->{          _id,          size,          color,          sku,          priceUSD,          priceBs,          "images": images[] {              _type,              _key,              asset-> {                  _type,                  url,                  "dimensions": dimensions              }          }        },      },    },  },}
+// Query: {  "taxonomies": *[_type == "taxonomy"] {    _id,    name,    "taxons": taxons[]-> {      _id,      name,      description,      "products": products[]-> {        _id,        name,        description,        material,        slug,        careInstructions,        "variants": variants[]->{          _id,          size,          color,          sku,          priceUSD,          priceBs,          "images": images[] {              _type,              _key,              asset-> {                  _type,                  url,                  "dimensions": dimensions              }          }        },      },    },  },}
 export type CATALOG_QUERYResult = {
   taxonomies: Array<{
     _id: string;
@@ -699,6 +699,7 @@ export type CATALOG_QUERYResult = {
         name: string | null;
         description: string | null;
         material: null;
+        slug: null;
         careInstructions: null;
         variants: Array<{
           _id: string;
@@ -721,6 +722,40 @@ export type CATALOG_QUERYResult = {
     }> | null;
   }>;
 };
+// Variable: PRODUCT_QUERY
+// Query: *[_type == "product" && slug.current == $slug][0] {    _id,    _type,    _rev,    _createdAt,    _updatedAt,    name,    material,    careInstructions,    brand,    "slug": slug.current,    "variants": variants[]->{      _id,      _type,      _key,      size,      color,      colorRgb,      sku,      priceUSD,      priceBs,      "images": images[] {        _type,        _key,        asset-> {          _type,          url,          "dimensions": dimensions        }      }    }  }
+export type PRODUCT_QUERYResult = {
+  _id: string;
+  _type: "product";
+  _rev: string;
+  _createdAt: string;
+  _updatedAt: string;
+  name: string | null;
+  material: null;
+  careInstructions: null;
+  brand: null;
+  slug: null;
+  variants: Array<{
+    _id: string;
+    _type: "variant";
+    _key: null;
+    size: null;
+    color: null;
+    colorRgb: null;
+    sku: string | null;
+    priceUSD: null;
+    priceBs: null;
+    images: Array<{
+      _type: "image";
+      _key: string;
+      asset: {
+        _type: "sanity.imageAsset";
+        url: string | null;
+        dimensions: null;
+      } | null;
+    }> | null;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -730,6 +765,7 @@ declare module "@sanity/client" {
     "*[_type == \"home\"][0] {\n  _id,\n  _type,\n  sections[] {\n    _type,\n    ...,\n    settings {\n      _type,\n      padding {\n        top,\n        bottom\n      },\n      customCss\n    }\n  }\n}": HOME_QUERYResult;
     "*[_type == \"page\"][0] {\n  _id,\n  _type,\n  sections[] {\n    _type,\n    ...,\n    settings {\n      _type,\n      padding {\n        top,\n        bottom\n      },\n      customCss\n    }\n  }\n}": PAGE_QUERYResult;
     "*[_type == \"header\"][0]{\n  ...,\n  navigation[]{\n    ...,\n    _type == \"internalLink\" => {\n      ...,\n      link->{\n        _type,\n        \"slug\": slug.current,\n      }\n    },\n    _type == \"nestedNavigation\" => {\n      ...,\n      link->{\n        _type,\n        \"slug\": slug.current\n      },\n      childLinks[]{\n        ...,\n        link->{\n          _type,\n          \"slug\": slug.current\n        }\n      }\n    }\n  }\n}": HEADER_QUERYResult;
-    "{\n  \"taxonomies\": *[_type == \"taxonomy\"] {\n    _id,\n    name,\n    \"taxons\": taxons[]-> {\n      _id,\n      name,\n      description,\n      \"products\": products[]-> {\n        _id,\n        name,\n        description,\n        material,\n        careInstructions,\n        \"variants\": variants[]->{\n          _id,\n          size,\n          color,\n          sku,\n          priceUSD,\n          priceBs,\n          \"images\": images[] {\n              _type,\n              _key,\n              asset-> {\n                  _type,\n                  url,\n                  \"dimensions\": dimensions\n              }\n          }\n        },\n      },\n    },\n  },\n}": CATALOG_QUERYResult;
+    "{\n  \"taxonomies\": *[_type == \"taxonomy\"] {\n    _id,\n    name,\n    \"taxons\": taxons[]-> {\n      _id,\n      name,\n      description,\n      \"products\": products[]-> {\n        _id,\n        name,\n        description,\n        material,\n        slug,\n        careInstructions,\n        \"variants\": variants[]->{\n          _id,\n          size,\n          color,\n          sku,\n          priceUSD,\n          priceBs,\n          \"images\": images[] {\n              _type,\n              _key,\n              asset-> {\n                  _type,\n                  url,\n                  \"dimensions\": dimensions\n              }\n          }\n        },\n      },\n    },\n  },\n}": CATALOG_QUERYResult;
+    "\n  *[_type == \"product\" && slug.current == $slug][0] {\n    _id,\n    _type,\n    _rev,\n    _createdAt,\n    _updatedAt,\n    name,\n    material,\n    careInstructions,\n    brand,\n    \"slug\": slug.current,\n    \"variants\": variants[]->{\n      _id,\n      _type,\n      _key,\n      size,\n      color,\n      colorRgb,\n      sku,\n      priceUSD,\n      priceBs,\n      \"images\": images[] {\n        _type,\n        _key,\n        asset-> {\n          _type,\n          url,\n          \"dimensions\": dimensions\n        }\n      }\n    }\n  }\n": PRODUCT_QUERYResult;
   }
 }

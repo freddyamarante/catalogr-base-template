@@ -10,6 +10,9 @@ interface ProductCardGridProps {
     name: string | null;
     description: string | null;
     material: string | null;
+    slug?: {
+      current: string | null;
+    } | null;
     careInstructions: string | null;
     variants?: Array<{
       _id: string;

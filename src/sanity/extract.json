@@ -2263,6 +2263,14 @@
         },
         "optional": true
       },
+      "colorRgb": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "color"
+        },
+        "optional": true
+      },
       "priceUSD": {
         "type": "objectAttribute",
         "value": {
@@ -2713,6 +2721,14 @@
         "type": "objectAttribute",
         "value": {
           "type": "string"
+        },
+        "optional": true
+      },
+      "slug": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "slug"
         },
         "optional": true
       },

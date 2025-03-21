@@ -100,6 +100,7 @@ export const CATALOG_QUERY = defineQuery(`{
         name,
         description,
         material,
+        slug,
         careInstructions,
         "variants": variants[]->{
           _id,
@@ -122,3 +123,37 @@ export const CATALOG_QUERY = defineQuery(`{
     },
   },
 }`);
+
+export const PRODUCT_QUERY = defineQuery(`
+  *[_type == "product" && slug.current == $slug][0] {
+    _id,
+    _type,
+    _rev,
+    _createdAt,
+    _updatedAt,
+    name,
+    material,
+    careInstructions,
+    brand,
+    "slug": slug.current,
+    "variants": variants[]->{
+      _id,
+      _type,
+      _key,
+      size,
+      color,
+      colorRgb,
+      sku,
+      priceUSD,
+      priceBs,
+      "images": images[] {
+        _type,
+        _key,
+        asset-> {
+          _type,
+          url,
+        }
+      }
+    }
+  }
+`);

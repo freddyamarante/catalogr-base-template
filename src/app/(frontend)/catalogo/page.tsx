@@ -7,7 +7,7 @@ import ProductCardGrid from "@/components/ProductCardGrid";
 
 const options = { next: { revalidate: 60 } };
 
-export default async function Home() {
+export default async function Catalog() {
   const catalog = await client.fetch(CATALOG_QUERY, {}, options);
 
   const products = catalog.taxonomies.flatMap(taxonomy =>
@@ -15,9 +15,8 @@ export default async function Home() {
   );
 
   return (
-    <>
-      <h1>Catalogo</h1>
+    <main className="py-12">
       <ProductCardGrid products={products} />
-    </>
+    </main>
   );
 }

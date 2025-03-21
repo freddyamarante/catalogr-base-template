@@ -7,7 +7,8 @@ import { urlFor } from '@/sanity/lib/image';
 import { useSettings } from "./context/SettingsContext";
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
-import { Plus } from 'lucide-react';
+import { PlusIcon } from 'lucide-react';
+import Link from 'next/link';
 
 interface ProductCardProps {
   product: {
@@ -15,6 +16,9 @@ interface ProductCardProps {
     name: string | null;
     description: string | null;
     material: string | null;
+    slug?: {
+      current: string | null;
+    } | null;
     careInstructions: string | null;
     variants?: {
       _id: string;
@@ -39,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const settings = useSettings()
 
   return (
-    <div className='relative flex flex-col gap-4 max-w-full h-auto'>
+    <Link href={`/catalogo/${product?.slug?.current}`} className='relative flex flex-col gap-4 max-w-full h-auto'>
       <div className='relative'>
         {product.variants?.[0]?.images?.[0] && (
           <Image
@@ -57,7 +61,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           />
         )}
         <Button size="icon" className='absolute right-8 -bottom-6 lg:-bottom-10 size-12 lg:size-20'>
-          <Plus className="w-96 h-96" />
+          <PlusIcon className='w-64 h-64' />
         </Button>
       </div>
 
@@ -76,7 +80,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         :
         <h3 className='font-light line-clamp-1'>{product.name}</h3>
       }
-    </div>
+    </Link>
   );
 };
 
