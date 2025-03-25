@@ -6,22 +6,22 @@ import ColorPicker from "@/components/ColorPicker";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-
 import { cn } from "@/lib/utils";
 import { urlFor } from "@/sanity/lib/image";
 import SizePicker from "@/components/SizePicker";
 import { Carousel, CarouselItem, CarouselContent } from "@/components/ui/carousel";
+import Price from "@/components/Price";
 
 export default async function Product({
   params,
   searchParams,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const { data: product } = await sanityFetch({
     query: PRODUCT_QUERY,
-    params: await params,
+    params: params,
   });
 
   if (!product) {
@@ -46,11 +46,11 @@ export default async function Product({
     allVariants.flatMap(v => v.availableSizes || [])
   )).filter((size): size is string => Boolean(size));
 
-  let selectedColor = await typeof searchParams.color === 'string'
+  let selectedColor = typeof searchParams.color === 'string'
     ? searchParams.color
     : colorOptions[0]?.name || '';
 
-  let selectedSize = await typeof searchParams.size === 'string'
+  let selectedSize = typeof searchParams.size === 'string'
     ? searchParams.size
     : allPossibleSizes[0] || '';
 
@@ -157,9 +157,9 @@ export default async function Product({
                 selectedSize={typeof selectedSize === 'string' ? selectedSize : ''}
               />
 
-              <Button size="2xl" type="submit" className="flex justify-between py-8 w-full">
+              <Button size="2xl" className="flex justify-between py-8 w-full">
                 <span className="font-bold text-2xl">
-                  ${product?.variants?.[0].priceUSD}
+                  <Price priceUSD={currentVariant.priceUSD} priceBs={currentVariant.priceBs} />
                 </span>
                 <span className="font-semibold text-xl text-right">
                   Comprar

@@ -3,6 +3,7 @@
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
 interface ColorOption {
   name: string;
@@ -21,7 +22,20 @@ const ColorPicker = ({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const color = searchParams.get('color')
+  const [currentSelectedColor, setCurrentSelectedColor] = useState<string | null>(color || null);
+
+  useEffect(() => {
+    if (!color && colors?.[0]?.name) {
+      setCurrentSelectedColor(colors[0].name);
+      const url = new URL(window.location.href);
+      url.searchParams.set('color', colors[0].name);
+      window.history.replaceState({}, '', url.toString());
+    }
+  }, [color, colors]);
+
   const handleColorChange = (color: string) => {
+    setCurrentSelectedColor(color);
     const params = new URLSearchParams(searchParams.toString());
     params.set('color', color);
     router.replace(`${pathname}?${params.toString()}`);
@@ -46,7 +60,7 @@ const ColorPicker = ({
               style={{
                 backgroundColor: color.hex ?? '#121212',
                 fill: color.hex ?? '#121212',
-                boxShadow: selectedColor === (color.name || index.toString())
+                boxShadow: currentSelectedColor === (color.name || index.toString())
                   ? `0 0 0 3px ${color.hex ?? '#121212'}`
                   : undefined,
               }}
