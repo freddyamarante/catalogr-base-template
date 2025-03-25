@@ -15,9 +15,6 @@ import Link from "next/link";
 import {
   Sheet, 
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger
 } from '../components/ui/sheet'
 import { Button } from "./ui/button";
@@ -97,16 +94,12 @@ const Header: React.FC = () => {
           <div className="flex lg:hidden w-full">
             <Sheet>
               <SheetTrigger asChild>
-                <Button size="icon" variant="outline">
+                <Button size="icon" variant="outline" className="rounded-lg">
                   <Menu size={24} />
                 </Button>
               </SheetTrigger>
               <SheetContent>
-                <SheetHeader>
-                  <SheetTitle className="text-text">Navigation</SheetTitle>
-                  <SheetDescription>Select a link to navigate</SheetDescription>
-                </SheetHeader>
-                <div className="grid gap-4 p-4">
+                <div className="grid gap-4 px-4 my-16">
                   {header.navigation?.map((navItem) => {
                     if (!navItem) return null;
 

@@ -43,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const settings = useSettings()
 
   return (
-    <Link href={`/catalogo/${product?.slug?.current}`} className='relative flex flex-col gap-4 max-w-full h-auto'>
+    <Link href={`/productos/${product?.slug?.current}`} className='relative flex flex-col gap-4 max-w-full h-auto'>
       <div className='relative'>
         {product.variants?.[0]?.images?.[0] && (
           <Image

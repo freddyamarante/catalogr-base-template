@@ -1,42 +1,58 @@
-'use client'
+'use client';
 
-import React from 'react';
-import { useState } from 'react';
-
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
+import { cn } from '@/lib/utils';
 
-interface ColorPickerProps {
-  colors: Array<{
-    name: string | null;
-    hex: string | null
-  }> | null;
+interface ColorOption {
+  name: string;
+  hex: string;
 }
 
-const ColorPicker: React.FC<ColorPickerProps> = ({ colors }) => {
-  const [selectedColor, setSelectedColor] = useState(colors?.[0].name)
+interface ColorPickerProps {
+  colors: ColorOption[];
+  selectedColor: string;
+}
+
+const ColorPicker = ({ 
+  colors, selectedColor
+}: ColorPickerProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const handleColorChange = (color: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('color', color);
+    router.replace(`${pathname}?${params.toString()}`);
+  };
 
   return (
     <div>
       <h4 className='font-bold'>Color</h4>
-
       <fieldset aria-label="Choose a color" className="mt-2">
-        <RadioGroup value={selectedColor ?? ''} onValueChange={setSelectedColor} className="flex items-center gap-x-3">
-          {colors && colors.map((color, index) => (
-            <RadioGroupItem
+        <RadioGroup 
+          value={selectedColor} 
+          onValueChange={handleColorChange}
+          className="grid grid-cols-3 gap-3 w-fit"
+        >
+          {colors && colors.map((color, index) => {
+            return (
+              <RadioGroupItem
               key={index}
               value={color.name || index.toString()}
               aria-label={color.name ?? ''}
-              className='size-[40]'
+              className={cn('size-[40] w-fit')}
               style={{
                 backgroundColor: color.hex ?? '#121212',
                 fill: color.hex ?? '#121212',
                 boxShadow: selectedColor === (color.name || index.toString())
-                  ? `0 0 0 2px ${color.hex ?? '#121212'}`
+                  ? `0 0 0 3px ${color.hex ?? '#121212'}`
                   : undefined,
               }}
-            >
-            </RadioGroupItem>
-          ))}
+              />
+            );
+          })}
         </RadioGroup>
       </fieldset>
     </div>

@@ -30,7 +30,12 @@ const sanityCommerceConfig: SanityCommercePluginConfig = {
     { name: 'careInstructions', title: 'Instrucciones de Cuidado', type: 'text' },
   ],
   variantAttributes: [
-    { name: 'size', title: 'Talla', type: 'string' },
+    { 
+      name: 'availableSizes', 
+      title: 'Tamaños Disponibles para esta variante', 
+      type: 'array',
+      of: [{type: 'string'}]
+    },
     { name: 'color', title: 'Color', type: 'string' },
     { name: 'colorRgb', title: 'Color RGB', type: 'color' },
     { name: 'sku', title: 'SKU', type: 'string' },

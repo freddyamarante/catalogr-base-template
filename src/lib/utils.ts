@@ -80,3 +80,23 @@ export const generateRandomAspectRatioHeight = () => {
 
   return aspectRatioClass;
 }
+
+export const getAvailableColors = (variants, selectedSize) => {
+  return Array.from(new Set(
+    variants
+      .filter(v => !selectedSize || v.size === selectedSize)
+      .map(v => v.color)
+  )).filter(Boolean) as string[];
+};
+
+export const getAvailableSizes = (variants, selectedColor) => {
+  return Array.from(new Set(
+    variants
+      .filter(v => !selectedColor || v.color === selectedColor)
+      .map(v => v.size)
+  )).filter(Boolean) as string[];
+};
+
+export const getDefaultVariant = (variants) => {
+  return variants[0] || null;
+};
