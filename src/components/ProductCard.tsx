@@ -47,7 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className='relative'>
         {product.variants?.[0]?.images?.[0] && (
           <Image
-            className={cn('object-cover rounded-xl aspect-[9/10]',)}
+            className={cn('object-cover rounded-xl aspect-[14/15]',)}
             src={urlFor(product.variants[0].images[0])
               .width(700)
               .height(800)

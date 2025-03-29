@@ -95,6 +95,8 @@ export const CATALOG_QUERY = defineQuery(`{
       _id,
       name,
       description,
+      "slug": slug.current,
+      "productCount": count(products[]->),
       "products": products[]-> {
         _id,
         name,

@@ -24,13 +24,21 @@ const SizePicker = ({
   const [currentSelectedSize, setCurrentSelectedSize] = useState<string | null>(size || null);
 
   useEffect(() => {
-    if (!size && allSizes[0]) {
-      setCurrentSelectedSize(allSizes[0]);
+    if (!size && availableSizes[0]) {
+      setCurrentSelectedSize(availableSizes[0]);
       const url = new URL(window.location.href);
-      url.searchParams.set('size', allSizes[0]);
+      url.searchParams.set('size', availableSizes[0]);
       window.history.replaceState({}, '', url.toString());
     }
-  }, [size, allSizes]);
+
+    if (size && !availableSizes.includes(size)) {
+      const newSize = availableSizes[0];
+      setCurrentSelectedSize(newSize);
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('size', newSize);
+      router.replace(`${pathname}?${params.toString()}`);
+    }
+  }, [size, availableSizes, router, pathname, searchParams]);
 
   const handleSizeChange = (size: string) => {
     setCurrentSelectedSize(size);
@@ -40,31 +48,31 @@ const SizePicker = ({
   };
 
   return (
-    <div>
+    <div className='flex flex-col gap-2'>
       <h4 className='font-bold'>Size</h4>
       <fieldset aria-label="Choose a size" className="mt-2">
-        <RadioGroup
-          value={selectedSize}
-          onValueChange={handleSizeChange}
-          className="flex flex-wrap gap-3 w-fit"
+      <RadioGroup
+        value={selectedSize}
+        onValueChange={handleSizeChange}
+        className="flex flex-wrap gap-3 w-fit"
+      >
+        {allSizes.map(size => (
+        <RadioGroupItem
+          key={size}
+          value={size}
+          disabled={!availableSizes.includes(size)}
+          className={cn(
+          'cursor-pointer focus:outline-none border-none text-xl font-semibold !p-2 leading-none size-[40]',
+          currentSelectedSize === size
+            ? 'text-background bg-border'
+            : 'text-text',
+          !availableSizes.includes(size) && 'opacity-50 cursor-not-allowed'
+          )}
         >
-          {allSizes.map(size => (
-            <RadioGroupItem
-              key={size}
-              value={size}
-              disabled={!availableSizes.includes(size)}
-              className={cn(
-                'cursor-pointer focus:outline-none border-none text-xl font-semibold !p-2 leading-none size-[40]',
-                currentSelectedSize === size
-                  ? 'text-background bg-border'
-                  : 'text-text',
-                !availableSizes.includes(size) && 'opacity-50 cursor-not-allowed'
-              )}
-            >
-              {size}
-            </RadioGroupItem>
-          ))}
-        </RadioGroup>
+          {size}
+        </RadioGroupItem>
+        ))}
+      </RadioGroup>
       </fieldset>
     </div>
   );
