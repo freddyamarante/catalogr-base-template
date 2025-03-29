@@ -12,6 +12,11 @@ export default defineType({
       type: 'string'
     }),
     defineField({
+      name: 'whatsAppNumber',
+      title: 'Número de WhatsApp',
+      type: 'string'
+    }),
+    defineField({
       name: 'logo',
       title: 'Logo',
       type: 'inlineSvg'

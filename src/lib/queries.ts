@@ -4,6 +4,7 @@ export const SETTINGS_QUERY = defineQuery(`*[_type == "settings"][0] {
   _id,
   _type,
   storeName,
+  whatsAppNumber,
   logo,
   logoSize,
   favicon,
@@ -145,7 +146,9 @@ export const PRODUCT_QUERY = defineQuery(`
       name,
       availableSizes,
       color,
-      colorRgb { hex },
+      colorRgb: {
+        hex,
+      },
       sku,
       priceUSD,
       priceBs,

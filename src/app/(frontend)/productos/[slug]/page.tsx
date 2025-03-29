@@ -40,7 +40,7 @@ export default async function Product({
   }));
 
   const allPossibleSizes = Array.from(new Set(
-    allVariants.flatMap(v => v.availableSizes || [])
+    allVariants.flatMap(v => v.availableSizes || []) as string[]
   )).filter((size): size is string => Boolean(size));
 
   let selectedColor = typeof searchParams.color === 'string'

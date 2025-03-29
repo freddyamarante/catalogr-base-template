@@ -1611,6 +1611,13 @@
         },
         "optional": true
       },
+      "whatsAppNumber": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "logo": {
         "type": "objectAttribute",
         "value": {
@@ -2249,10 +2256,13 @@
         },
         "optional": true
       },
-      "size": {
+      "availableSizes": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "array",
+          "of": {
+            "type": "string"
+          }
         },
         "optional": true
       },
