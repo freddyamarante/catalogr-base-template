@@ -4,6 +4,13 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 
 interface ColorOption {
   name: string;
@@ -52,19 +59,27 @@ const ColorPicker = ({
         >
           {colors && colors.map((color, index) => {
             return (
-              <RadioGroupItem
-              key={index}
-              value={color.name || index.toString()}
-              aria-label={color.name ?? ''}
-              className={cn('size-[40] w-fit')}
-              style={{
-                backgroundColor: color.hex ?? '#121212',
-                fill: color.hex ?? '#121212',
-                boxShadow: currentSelectedColor === (color.name || index.toString())
-                  ? `0 0 0 3px ${color.hex ?? '#121212'}`
-                  : undefined,
-              }}
-              />
+              <TooltipProvider key={index}>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <RadioGroupItem
+                      value={color.name || index.toString()}
+                      aria-label={color.name ?? ''}
+                      className={cn('size-[40] w-fit')}
+                      style={{
+                        backgroundColor: color.hex ?? '#121212',
+                        fill: color.hex ?? '#121212',
+                        boxShadow: currentSelectedColor === (color.name || index.toString())
+                          ? `0 0 0 3px ${color.hex ?? '#121212'}`
+                          : undefined,
+                      }}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{color.name}</p> 
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             );
           })}
         </RadioGroup>

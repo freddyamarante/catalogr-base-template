@@ -72,7 +72,7 @@ export default async function Product({
 
   return (
     <div className="my-4 overflow-x-visible">
-      <div className="mx-auto mt-8 px-4 sm:px-6 lg:px-8 overflow-x-visible">
+      <div className="mx-auto mt-8 px-4 sm:px-0 overflow-x-visible">
         <div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-5 lg:col-start-8 hidden sm:block">
             <div className="space-y-3">
@@ -137,8 +137,8 @@ export default async function Product({
           </div>
 
           <div className="lg:col-span-5 lg:col-start-8 block sm:hidden mt-8">
-            <div className="flex justify-between">
-            {currentVariant.name ? <h1 className="uppercase">{currentVariant.name}</h1> : <h1 className="uppercase">product.name</h1>}
+            <div className="space-y-3">
+              {currentVariant.name ? <h1 className="uppercase">{currentVariant.name}</h1> : <h1 className="uppercase">product.name</h1>}
               {product.brand ? <p className="text-sm text-uppercase">Marca: <span className="font-semibold">{product.brand}</span></p> : <p className="text-sm">Sin marca</p>}
               {product.description ? <p className="text-lg">{product.description}</p> : <p className="text-lg">Sin descripción</p>}
             </div>

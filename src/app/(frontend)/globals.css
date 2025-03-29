@@ -69,6 +69,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-text;
   }
@@ -100,12 +101,22 @@
   .noise-light {
     background-image: url('/assets/noise-light.png');
   }
-  
-  .custom-navigation-menu > div:first-child {
+
+  .custom-navigation-menu>div:first-child {
     width: 100%;
   }
 
-  .custom-carousel > div:first-child {
+  .custom-carousel>div:first-child {
     overflow: visible !important;
   }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar ::-webkit-scrollbar {
+    display: none;
+  }
+
 }
