@@ -8,8 +8,6 @@ const options = { next: { revalidate: 60 } };
 
 export default async function Catalog({
   searchParams
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const { taxonomies} = await client.fetch(CATALOG_QUERY, {}, options);
 

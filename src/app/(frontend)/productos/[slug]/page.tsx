@@ -15,9 +15,6 @@ import Price from "@/components/Price";
 export default async function Product({
   params,
   searchParams,
-}: {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const { data: product } = await sanityFetch({
     query: PRODUCT_QUERY,
