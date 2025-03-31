@@ -61,6 +61,7 @@ const SizePicker = ({
           key={size}
           value={size}
           disabled={!availableSizes.includes(size)}
+          hideIndicator
           className={cn(
           'cursor-pointer focus:outline-none border-none text-xl font-semibold !p-2 leading-none size-[40]',
           currentSelectedSize === size

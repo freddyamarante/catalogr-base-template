@@ -146,9 +146,7 @@ export const PRODUCT_QUERY = defineQuery(`
       name,
       availableSizes,
       color,
-      colorRgb: {
-        hex,
-      },
+      colorRgb { hex },
       sku,
       priceUSD,
       priceBs,

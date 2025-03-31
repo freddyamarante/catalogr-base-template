@@ -61,20 +61,22 @@ const ColorPicker = ({
             return (
               <TooltipProvider key={index}>
                 <Tooltip>
-                  <TooltipTrigger>
-                    <RadioGroupItem
-                      value={color.name || index.toString()}
-                      aria-label={color.name ?? ''}
-                      className={cn('size-[40] w-fit')}
-                      style={{
-                        backgroundColor: color.hex ?? '#121212',
-                        fill: color.hex ?? '#121212',
-                        boxShadow: currentSelectedColor === (color.name || index.toString())
-                          ? `0 0 0 3px ${color.hex ?? '#121212'}`
-                          : undefined,
-                      }}
-                    />
-                  </TooltipTrigger>
+                  <RadioGroupItem
+                    value={color.name || index.toString()}
+                    aria-label={color.name ?? ''}
+                    className={cn('size-[40] w-fit')}
+                    style={{
+                      backgroundColor: color.hex ?? '#121212',
+                      fill: color.hex ?? '#121212',
+                      boxShadow: currentSelectedColor === (color.name || index.toString())
+                        ? `0 0 0 3px ${color.hex ?? '#121212'}`
+                        : undefined,
+                    }}
+                  >
+                    <TooltipTrigger asChild>
+                      <div />
+                    </TooltipTrigger>
+                  </RadioGroupItem>
                   <TooltipContent>
                     <p>{color.name}</p> 
                   </TooltipContent>

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { twMerge } from "tailwind-merge"
 import { dataset, projectId } from "@/sanity/env"
 import createImageUrlBuilder from "@sanity/image-url"
@@ -100,3 +102,30 @@ export const getAvailableSizes = (variants, selectedColor) => {
 export const getDefaultVariant = (variants) => {
   return variants[0] || null;
 };
+
+export const getWhatsAppUrl = (
+  product: any,
+  variant: any,
+  phoneNumber: string,
+  color?: string,
+  size?: string,
+  currency?: string 
+) => {
+  if (!phoneNumber) {
+    console.error('WhatsApp number is required');
+    return '#';
+  }
+
+  const productName = product?.name || 'Producto desconocido';
+  const brand = product?.brand || 'Sin marca';
+  const colorText = color || variant?.color || 'Sin color especificado';
+  const sizeText = size || variant?.size || 'Sin talla especificada';
+  const priceUSD = variant?.priceUSD || 0;
+  const priceBs = variant?.priceBs || 0;
+
+  const message = `Hola, estoy interesado en comprar:\n\n*Producto:* ${productName}\n*Marca:* ${brand}\n*Color:* ${colorText}\n*Talla:* ${sizeText}\n*Precio:* ${
+    currency === 'USD' ? `${priceUSD} USD` : `${priceBs} Bs`
+  }`;
+  
+  return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+}

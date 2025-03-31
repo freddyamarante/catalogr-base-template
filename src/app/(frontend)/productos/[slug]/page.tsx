@@ -3,14 +3,13 @@ import { PRODUCT_QUERY } from "@/lib/queries";
 import { notFound } from "next/navigation";
 
 import ColorPicker from "@/components/ColorPicker";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 import { urlFor } from "@/sanity/lib/image";
 import SizePicker from "@/components/SizePicker";
 import { Carousel, CarouselItem, CarouselContent } from "@/components/ui/carousel";
-import Price from "@/components/Price";
+import BuyButton from "@/components/BuyButton";
 
 export default async function Product({
   params,
@@ -39,15 +38,18 @@ export default async function Product({
     hex
   }));
 
+  const color = await searchParams.color
+  const size = await searchParams.size
+
   const allPossibleSizes = Array.from(new Set(
     allVariants.flatMap(v => v.availableSizes || []) as string[]
   )).filter((size): size is string => Boolean(size));
 
-  let selectedColor = typeof searchParams.color === 'string'
+  let selectedColor = typeof color === 'string'
     ? searchParams.color
     : colorOptions[0]?.name || '';
 
-  let selectedSize = typeof searchParams.size === 'string'
+  let selectedSize = typeof size === 'string'
     ? searchParams.size
     : allPossibleSizes[0] || '';
 
@@ -79,7 +81,7 @@ export default async function Product({
             </div>
           </div>
 
-          <div className="mt-8 hidden sm:block lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
+          <div className="mt-8 hidden lg:block lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
             <h2 className="sr-only">Images</h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
@@ -103,7 +105,7 @@ export default async function Product({
             </div>
           </div>
 
-          <div className="relative mt-8 block sm:hidden w-full">
+          <div className="relative mt-8 block lg:hidden w-full">
             <Carousel
               className="w-full h-full custom-carousel"
             >
@@ -145,23 +147,16 @@ export default async function Product({
             <form className="space-y-8">
               <ColorPicker
                 colors={colorOptions}
-                selectedColor={typeof selectedColor === 'string' ? selectedColor : ''}
+                selectedColor={selectedColor}
               />
 
               <SizePicker
                 allSizes={allPossibleSizes}
                 availableSizes={currentAvailableSizes}
-                selectedSize={typeof selectedSize === 'string' ? selectedSize : ''}
+                selectedSize={selectedSize}
               />
 
-              <Button size="2xl" className="flex justify-between py-8 w-full">
-                <span className="font-bold text-2xl">
-                  <Price priceUSD={currentVariant.priceUSD} priceBs={currentVariant.priceBs} />
-                </span>
-                <span className="font-semibold text-xl text-right">
-                  Comprar
-                </span>
-              </Button>
+              <BuyButton product={product} currentVariant={currentVariant} color={selectedColor} size={selectedSize} className="w-full" />
             </form>
           </div>
         </div>
@@ -169,3 +164,4 @@ export default async function Product({
     </div>
   );
 }
+

@@ -21,8 +21,9 @@ function RadioGroup({
 function RadioGroupItem({
   className,
   children,
+  hideIndicator = false,
   ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {
+}: React.ComponentProps<typeof RadioGroupPrimitive.Item> & { hideIndicator?: boolean }) {
   return (
     <RadioGroupPrimitive.Item
       data-slot="radio-group-item"
@@ -33,14 +34,12 @@ function RadioGroupItem({
       {...props}
     >
       {children}
-      {
-        !children && <RadioGroupPrimitive.Indicator
+      {!hideIndicator && <RadioGroupPrimitive.Indicator
           data-slot="radio-group-indicator"
-          className="relative flex items-center justify-center fill-current w-full h-full"
+          className="relative flex items-center justify-center fill-current w-full h-full z-50"
         >
           <div className="rounded-full bg-border absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 brightness-90" />
-        </RadioGroupPrimitive.Indicator>
-      }
+      </RadioGroupPrimitive.Indicator>}
     </RadioGroupPrimitive.Item>
   )
 }
