@@ -60,7 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             loading={product.variants[0].images[0] ? "eager" : "lazy"}
           />
         )}
-        <Button size="icon" className='absolute right-8 -bottom-6 lg:-bottom-10 size-12 lg:size-20'>
+        <Button size="icon" className='absolute right-8 -bottom-6 lg:-bottom-10 size-12 lg:size-20 cursor-pointer'>
           <PlusIcon className='w-64 h-64' />
         </Button>
       </div>

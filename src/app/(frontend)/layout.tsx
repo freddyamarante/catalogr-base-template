@@ -12,6 +12,8 @@ import { SettingsProvider } from "@/components/context/SettingsContext";
 
 import { validateSettings } from "@/lib/utils";
 import Header from "@/components/Header";
+import { CartProvider } from "@/components/context/CartProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,12 +48,15 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}>
         <SettingsProvider settings={settingsData}>
-          <ThemeProvider settings={validatedSettings}>
-            <Header />
-            <main className="flex flex-col gap-y-[--space-between-sections] sm:gap-y-[calc(var(--space-between-sections)*1.5)] px-4 sm:px-24 overflow-hidden">
-              {children}
-            </main>
-          </ThemeProvider>
+          <CartProvider>
+            <ThemeProvider settings={validatedSettings}>
+              <Header />
+              <main className="flex flex-col gap-y-[--space-between-sections] sm:gap-y-[calc(var(--space-between-sections)*1.5)] px-4 sm:px-24 overflow-hidden">
+                {children}
+              </main>
+              <Toaster />
+            </ThemeProvider>
+          </CartProvider>
         </SettingsProvider>
       </body>
     </html>

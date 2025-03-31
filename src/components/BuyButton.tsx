@@ -17,20 +17,32 @@ interface BuyButtonProps {
   className?: string;
 }
 
-export const BuyButton: React.FC<BuyButtonProps> = ({ product, currentVariant, color, size, className }) => {
+export const BuyButton: React.FC<BuyButtonProps> = ({ product, currentVariant, className }) => {
   const settings = useSettings()
 
   return (
-    <Link href={getWhatsAppUrl(product, currentVariant, settings.whatsAppNumber ?? '', color, size, settings.currency ?? 'USD')} target="_blank" rel="noopener noreferrer">
+    <Link
+      href={getWhatsAppUrl(
+      [
+        {
+          product,
+          variants: [currentVariant],
+        },
+      ],
+      settings.whatsAppNumber ?? ''
+      )}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       <Button type="button" size="2xl" className={cn(className, "flex justify-between py-8 w-full")}>
-        <span className="font-bold text-2xl">
-          <Price priceUSD={currentVariant.priceUSD} priceBs={currentVariant.priceBs} />
-        </span>
-        <span className="font-semibold text-xl text-right">
-          Comprar
-        </span>
+      <span className="font-bold text-2xl">
+        <Price priceUSD={currentVariant.priceUSD} priceBs={currentVariant.priceBs} />
+      </span>
+      <span className="font-semibold text-xl text-right">
+        Comprar
+      </span>
       </Button>
-     </Link>
+    </Link>
   )
 }
 

@@ -104,28 +104,49 @@ export const getDefaultVariant = (variants) => {
 };
 
 export const getWhatsAppUrl = (
-  product: any,
-  variant: any,
+  selectedItems: Array<{
+    product: any;
+    variants: Array<{
+      name?: string
+      color?: string;
+      size?: string;
+      sku?: string;
+      priceUSD?: number;
+      priceBs?: number;
+    }>;
+  }>,
   phoneNumber: string,
-  color?: string,
-  size?: string,
-  currency?: string 
+  currency?: string
 ) => {
   if (!phoneNumber) {
     console.error('WhatsApp number is required');
     return '#';
   }
 
-  const productName = product?.name || 'Producto desconocido';
-  const brand = product?.brand || 'Sin marca';
-  const colorText = color || variant?.color || 'Sin color especificado';
-  const sizeText = size || variant?.size || 'Sin talla especificada';
-  const priceUSD = variant?.priceUSD || 0;
-  const priceBs = variant?.priceBs || 0;
+  const messages = selectedItems.map(({ product, variants }) => {
+    const productName = product?.name || 'Producto desconocido';
+    const brand = product?.brand || 'Sin marca';
 
-  const message = `Hola, estoy interesado en comprar:\n\n*Producto:* ${productName}\n*Marca:* ${brand}\n*Color:* ${colorText}\n*Talla:* ${sizeText}\n*Precio:* ${
-    currency === 'USD' ? `${priceUSD} USD` : `${priceBs} Bs`
-  }`;
+    const variantMessages = variants.map((variant) => {
+      const variantName = variant?.name || 'Sin variante especificada';
+      const colorText = variant?.color || 'Sin color especificado';
+      const sizeText = variant?.size || 'Sin talla especificada';
+      const sku = variant?.sku || 'Sin SKU especificado';
+      const priceUSD = variant?.priceUSD || 0;
+      const priceBs = variant?.priceBs || 0;
+
+      return `*Variante:* ${variantName}\n*Color:* ${colorText}\n*Talla:* ${sizeText}\n*SKU:* ${sku}\n*Precio:* ${
+        currency === 'USD' ? `${priceUSD} USD` : `${priceBs} Bs`
+      }`
+    });
+
+    return `*Producto:* ${productName}\n*Marca:* ${brand}\n${variantMessages.join('\n\n')}`;
+  });
+
   
-  return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-}
+  const message = `Hola, estoy interesado en comprar:\n\n${messages.join('\n\n')}`;
+  const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+  
+  console.log('WhatsApp URL:', url);
+  return url;
+};

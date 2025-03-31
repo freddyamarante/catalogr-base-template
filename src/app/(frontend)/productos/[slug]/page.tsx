@@ -10,6 +10,7 @@ import { urlFor } from "@/sanity/lib/image";
 import SizePicker from "@/components/SizePicker";
 import { Carousel, CarouselItem, CarouselContent } from "@/components/ui/carousel";
 import BuyButton from "@/components/BuyButton";
+import AddToCartButton from "@/components/AddToCartButton";
 
 export default async function Product({
   params,
@@ -156,7 +157,10 @@ export default async function Product({
                 selectedSize={selectedSize}
               />
 
-              <BuyButton product={product} currentVariant={currentVariant} color={selectedColor} size={selectedSize} className="w-full" />
+              <div className="flex flex-col gap-4">
+                <BuyButton product={product} currentVariant={currentVariant} className="w-full" />
+                <AddToCartButton product={product} currentVariant={currentVariant} color={selectedColor} size={selectedSize} className="w-full" />
+              </div>
             </form>
           </div>
         </div>

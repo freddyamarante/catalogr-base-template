@@ -19,6 +19,7 @@ import {
 } from '../components/ui/sheet'
 import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
+import { ShoppingCartIcon } from "lucide-react";
 
 const Header: React.FC = () => {
   const settings = useSettings();
@@ -89,6 +90,13 @@ const Header: React.FC = () => {
                   return null;
               }
             })}
+            <div className="relative group">
+              <Link href="/cart" className="text-lg font-bold">
+                <Button size="icon" variant="outline" className="rounded-lg">
+                  <ShoppingCartIcon size={24} />
+                </Button>
+              </Link>
+            </div>
           </div>
 
           <div className="flex lg:hidden w-full">
